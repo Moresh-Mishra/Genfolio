@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "client": "cd client && npm run dev",
-  "server": "cd server && nodemon index.js",
-  "dev": "concurrently \"npm run client\" \"npm run server\""
-},
+    "client": "cd Frontend && npm run dev",
+    "server": "cd Backend && nodemon index.js",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
