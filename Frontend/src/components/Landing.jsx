@@ -3,23 +3,42 @@ import { useNavigate } from 'react-router-dom';
 import user5 from "../assets/user5.png";
 import pen from "../assets/pen.png";
 import download from "../assets/download.png";
-import CustomerReviews from "./CustomerReviews";
+import CustomerReviews from "./CustomerReviews.jsx";
 
-function Landing() {
+const Landing = () => {
   const navigate = useNavigate();
 
-  const handleStartForFree = () => {
-    navigate('/form');
-  };
+  const handleStartForFree = () => navigate('/form');
+
+  const renderFeatureCard = (icon, title, description) => (
+    <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
+      <img
+        src={icon}
+        alt=""
+        className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
+      />
+      <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">{title}</h2>
+      <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
+        {description}
+      </p>
+    </div>
+  );
+
+  const renderStatCard = (value, label, color) => (
+    <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
+      <h2 className={`text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 ${color}`}>
+        {value}
+      </h2>
+      <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
+        {label}
+      </p>
+    </div>
+  );
 
   return (
     <div>
       <div className="barba-wrapper">
-        <div
-          className="barba-container"
-          data-barba="container"
-          data-barba-namespace="landing"
-        >
+        <div className="barba-container" data-barba="container" data-barba-namespace="landing">
           <div className="bg-gradient-to-bl from-pink-100 to-blue-100 min-h-[155px] p-4 sm:p-6">
             <div className="flex flex-col items-center pt-8 sm:pt-16">
               <img
@@ -33,10 +52,7 @@ function Landing() {
               </h1>
 
               <p className="text-center text-lg sm:text-2xl text-gray-700 px-2 sm:px-4 max-w-2xl leading-relaxed mb-6 sm:mb-10">
-                Create stunning, professional portfolios in minutes. Our
-                AI-powered generator helps you showcase your skills and projects
-                with beautiful, customizable templates that make you stand out
-                from the crowd.
+                Create stunning, professional portfolios in minutes. Our AI-powered generator helps you showcase your skills and projects with beautiful, customizable templates that make you stand out from the crowd.
               </p>
 
               <button 
@@ -53,6 +69,7 @@ function Landing() {
           </div>
         </div>
       </div>
+
       <div className="bg-gray-100 py-8 sm:py-13">
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-4 sm:mb-4">How It Works</h1>
         <p className="text-center text-base sm:text-lg text-gray-500 mb-8 sm:mb-15">
@@ -60,42 +77,21 @@ function Landing() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-15 px-4 sm:px-0">
-          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
-            <img
-              src={user5}
-              alt=""
-              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
-            />
-            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Share your Info</h2>
-            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-              Tell us about your background, skills, and experience. Our
-              intelligent form guides you through each step.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
-            <img
-              src={pen}
-              alt=""
-              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-b from-pink-400 to-pink-600 rounded-xl"
-            />
-            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Choose Your Style</h2>
-            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-              Select from professionally designed themes and customize colors,
-              fonts, and layouts to match your brand.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
-            <img
-              src={download}
-              alt=""
-              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-b from-blue-400 to-blue-700 rounded-xl"
-            />
-            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Download & Share</h2>
-            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-              Get your beautiful, responsive portfolio instantly. Download as
-              PDF or share your unique link.
-            </p>
-          </div>
+          {renderFeatureCard(
+            user5,
+            "Share your Info",
+            "Tell us about your background, skills, and experience. Our intelligent form guides you through each step."
+          )}
+          {renderFeatureCard(
+            pen,
+            "Choose Your Style",
+            "Select from professionally designed themes and customize colors, fonts, and layouts to match your brand."
+          )}
+          {renderFeatureCard(
+            download,
+            "Download & Share",
+            "Get your beautiful, responsive portfolio instantly. Download as PDF or share your unique link."
+          )}
         </div>
 
         <div className="mt-16 sm:mt-25 flex justify-center px-4 sm:px-0">
@@ -107,30 +103,9 @@ function Landing() {
               Join thousands who've accelerated their careers
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-35 mt-8 sm:mt-12 w-full">
-              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
-                <h2 className="text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 text-blue-600 mb-2">
-                  1,000+
-                </h2>
-                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-                  Portfolios Created
-                </p>
-              </div>
-              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
-                <h2 className="text-2xl sm:text-[35px] font-bold text-green-600 mt-4 sm:mt-8 mb-2">
-                  95%
-                </h2>
-                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-                  Satisfaction Rate
-                </p>
-              </div>
-              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
-                <h2 className="text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 text-orange-500">
-                  3 min
-                </h2>
-                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-                  Average Setup Time
-                </p>
-              </div>
+              {renderStatCard("1,000+", "Portfolios Created", "text-blue-600")}
+              {renderStatCard("95%", "Satisfaction Rate", "text-green-600")}
+              {renderStatCard("3 min", "Average Setup Time", "text-orange-500")}
             </div>
           </div>
         </div>
@@ -149,18 +124,17 @@ function Landing() {
               <li>
                 <span className="font-bold">Professional Templates</span>
                 <br />
-                Choose from dozens of industry-specific, professionally designed
-                templates.
+                Choose from dozens of industry-specific, professionally designed templates.
               </li>
               <li>
-                <span className="font-bold">Mobile Responsive</span> <br /> Your
-                portfolio looks perfect on all devices - desktop, tablet, and
-                mobile.
+                <span className="font-bold">Mobile Responsive</span>
+                <br />
+                Your portfolio looks perfect on all devices - desktop, tablet, and mobile.
               </li>
               <li>
-                <span className="font-bold">Instant Download</span> <br /> Get
-                your portfolio as a high-quality PDF ready for applications and
-                sharing.
+                <span className="font-bold">Instant Download</span>
+                <br />
+                Get your portfolio as a high-quality PDF ready for applications and sharing.
               </li>
             </ul>
             <div className="w-full sm:w-155 h-40 sm:h-75 border-2 bg-gradient-to-br from-blue-600 to-purple-500 mt-4 sm:mt-1 border-gray-300 rounded-lg flex items-center justify-center bg-white shadow-md">
@@ -190,6 +164,6 @@ function Landing() {
       </div>
     </div>
   );
-}
+};
 
 export default Landing;
