@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import user5 from "../assets/user5.png";
 import pen from "../assets/pen.png";
 import download from "../assets/download.png";
 import CustomerReviews from "./CustomerReviews";
 
 function Landing() {
+  const navigate = useNavigate();
+
+  const handleStartForFree = () => {
+    navigate('/form');
+  };
+
   return (
     <div>
       <div className="barba-wrapper">
@@ -32,7 +39,10 @@ function Landing() {
                 from the crowd.
               </p>
 
-              <button className="bg-blue-700 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-xl hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl font-semibold text-base sm:text-lg mb-6 sm:mb-8 active:scale-95 cursor-pointer">
+              <button 
+                onClick={handleStartForFree}
+                className="bg-blue-700 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-xl hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl font-semibold text-base sm:text-lg mb-6 sm:mb-8 active:scale-95 cursor-pointer"
+              >
                 ⚡ Start for Free
               </button>
 
@@ -168,7 +178,10 @@ function Landing() {
               Join thousands of professionals who have created stunning portfolios and advanced their careers.
             </p>
 
-            <button className="group bg-white border-1 w-full sm:w-70 h-12 sm:h-15 rounded-2xl text-blue-600 text-base sm:text-lg font-bold cursor-pointer hover:scale-105 hover:text-blue-500 transition-transform duration-300 flex items-center justify-center gap-2 mb-6 sm:mb-0">
+            <button 
+              onClick={handleStartForFree}
+              className="group bg-white border-1 w-full sm:w-70 h-12 sm:h-15 rounded-2xl text-blue-600 text-base sm:text-lg font-bold cursor-pointer hover:scale-105 hover:text-blue-500 transition-transform duration-300 flex items-center justify-center gap-2 mb-6 sm:mb-0"
+            >
               <span className="group-hover:text-red-500 transition-colors duration-300 text-2xl sm:text-3xl leading-none">♡</span> 
               <span>Start Creating Now</span>
             </button>

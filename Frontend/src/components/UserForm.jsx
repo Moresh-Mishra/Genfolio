@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import user5 from "../assets/user5.png";  
 import {
   UserIcon,
@@ -8,6 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function UserForm() {
+  const navigate = useNavigate();
   const [Drop, setDrop] = useState(false);
   const [Drop1, setDrop1] = useState(false);
   const [Drop2, setDrop2] = useState(false);
@@ -24,6 +26,15 @@ export default function UserForm() {
   function handleDrop3() {
     setDrop3(!Drop3);
   }
+  const handlePreviousPage = () => {
+    navigate('/');
+  };
+
+  const handleNextPage = () => {
+    // Add your next page logic here
+    console.log('Going to next page...');
+  };
+
   return (
     <div>
       <header className="text-center flex flex-col items-center p-4">
@@ -272,7 +283,7 @@ export default function UserForm() {
         </div>
       </div>
       <div className="flex justify-center items-center mt-8">
-        <div className="bg-transparent  rounded-xl p-4 w-[900px]">
+        <div className="bg-transparent rounded-xl p-4 w-[900px]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 bg-white shadow-lg rounded-xl p-6">
               <svg
@@ -289,10 +300,14 @@ export default function UserForm() {
                   d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
                 />
               </svg>
-              <button className=" cursor-pointer">Previous Page</button>
+              <button onClick={handlePreviousPage} className="cursor-pointer">
+                Previous Page
+              </button>
             </div>
             <div className="flex items-center gap-2 bg-white shadow-lg rounded-xl p-6">
-              <button className=" cursor-pointer">Next Page</button>
+              <button onClick={handleNextPage} className="cursor-pointer">
+                Next Page
+              </button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

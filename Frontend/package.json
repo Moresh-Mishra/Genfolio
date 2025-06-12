@@ -10,16 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@barba/core": "^2.10.3",
-=======
     "@heroicons/react": "^2.2.0",
->>>>>>> origin/Moresh
     "@tailwindcss/vite": "^4.1.8",
     "barba.js": "^1.0.0",
     "gsap": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
