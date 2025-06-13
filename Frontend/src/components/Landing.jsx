@@ -10,31 +10,6 @@ const Landing = () => {
 
   const handleStartForFree = () => navigate('/form');
 
-  const renderFeatureCard = (icon, title, description) => (
-    <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
-      <img
-        src={icon}
-        alt=""
-        className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
-      />
-      <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">{title}</h2>
-      <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-        {description}
-      </p>
-    </div>
-  );
-
-  const renderStatCard = (value, label, color) => (
-    <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
-      <h2 className={`text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 ${color}`}>
-        {value}
-      </h2>
-      <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
-        {label}
-      </p>
-    </div>
-  );
-
   return (
     <div>
       <div className="barba-wrapper">
@@ -77,21 +52,41 @@ const Landing = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-15 px-4 sm:px-0">
-          {renderFeatureCard(
-            user5,
-            "Share your Info",
-            "Tell us about your background, skills, and experience. Our intelligent form guides you through each step."
-          )}
-          {renderFeatureCard(
-            pen,
-            "Choose Your Style",
-            "Select from professionally designed themes and customize colors, fonts, and layouts to match your brand."
-          )}
-          {renderFeatureCard(
-            download,
-            "Download & Share",
-            "Get your beautiful, responsive portfolio instantly. Download as PDF or share your unique link."
-          )}
+          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
+            <img
+              src={user5}
+              alt=""
+              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
+            />
+            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Share your Info</h2>
+            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
+              Tell us about your background, skills, and experience. Our intelligent form guides you through each step.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
+            <img
+              src={pen}
+              alt=""
+              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
+            />
+            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Choose Your Style</h2>
+            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
+              Select from professionally designed themes and customize colors, fonts, and layouts to match your brand.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-100 h-auto sm:h-64 flex flex-col items-center p-4 sm:p-0">
+            <img
+              src={download}
+              alt=""
+              className="mt-4 sm:mt-5 w-12 sm:w-15 border-1 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 rounded-xl"
+            />
+            <h2 className="text-xl sm:text-2xl font-bold m-2 sm:m-3">Download & Share</h2>
+            <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">
+              Get your beautiful, responsive portfolio instantly. Download as PDF or share your unique link.
+            </p>
+          </div>
         </div>
 
         <div className="mt-16 sm:mt-25 flex justify-center px-4 sm:px-0">
@@ -103,9 +98,18 @@ const Landing = () => {
               Join thousands who've accelerated their careers
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-35 mt-8 sm:mt-12 w-full">
-              {renderStatCard("1,000+", "Portfolios Created", "text-blue-600")}
-              {renderStatCard("95%", "Satisfaction Rate", "text-green-600")}
-              {renderStatCard("3 min", "Average Setup Time", "text-orange-500")}
+              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
+                <h2 className="text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 text-blue-600">1,000+</h2>
+                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">Portfolios Created</p>
+              </div>
+              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
+                <h2 className="text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 text-green-600">95%</h2>
+                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">Satisfaction Rate</p>
+              </div>
+              <div className="bg-white rounded-xl border-1 shadow-2xl w-full sm:w-70 h-auto sm:h-35 flex flex-col items-center p-4 sm:p-0">
+                <h2 className="text-2xl sm:text-[35px] font-bold mt-4 sm:mt-8 mb-2 text-orange-500">3 min</h2>
+                <p className="text-center text-base sm:text-lg text-gray-700 mx-4 sm:mx-5">Average Setup Time</p>
+              </div>
             </div>
           </div>
         </div>
@@ -139,11 +143,11 @@ const Landing = () => {
             </ul>
             <div className="w-full sm:w-155 h-40 sm:h-75 border-2 bg-gradient-to-br from-blue-600 to-purple-500 mt-4 sm:mt-1 border-gray-300 rounded-lg flex items-center justify-center shadow-md">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sparkles h-20 w-20 text-white animate-pulse">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
-              <path d="M20 3v4"></path>
-              <path d="M22 5h-4"></path>
-              <path d="M4 17v2"></path>
-              <path d="M5 18H3"></path>
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+                <path d="M20 3v4"></path>
+                <path d="M22 5h-4"></path>
+                <path d="M4 17v2"></path>
+                <path d="M5 18H3"></path>
               </svg>
             </div>
           </div>

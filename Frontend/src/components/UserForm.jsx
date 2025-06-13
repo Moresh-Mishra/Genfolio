@@ -25,7 +25,7 @@ export default function UserForm() {
   };
 
   const handlePreviousPage = () => navigate('/');
-  const handleNextPage = () => console.log('Going to next page...');
+  const handleNextPage = () => navigate('/style');
 
   const renderFormSection = (icon, title, section, children) => (
     <div className="flex justify-center mt-8">
@@ -47,7 +47,7 @@ export default function UserForm() {
   );
 
   return (
-    <div>
+    <div className="bg-gray-100">
       <header className="text-center flex flex-col items-center p-4">
         <img
           src={user5}
@@ -57,12 +57,11 @@ export default function UserForm() {
         <h1 className="text-[40px] font-bold">Tell Us About Yourself</h1>
         <h3 className="text-[20px]">Share your professional story and background</h3>
       </header>
-
       {renderFormSection(
         <UserIcon className="w-10 h-10" />,
         "Basic Information",
         "basic",
-        <form className="space-y-4">
+        <form className="space-y-4 ">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <label className="block text-sm font-medium text-gray-700">Full Name</label>
