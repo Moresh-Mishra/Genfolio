@@ -30,80 +30,85 @@ function Customize() {
         </header>
 
         <section className="bg-gray-50 h-full pt-17 mb-5">
-          <article className="bg-white border-1 border-gray-200 rounded-xl shadow-2xl w-300 mx-45 h-151 flex flex-col items-center">
+          <article className="bg-white border-1 border-gray-200 rounded-xl shadow-2xl w-300 mx-45 h-171 flex flex-col items-center">
             <h2 className="text-center text-3xl font-bold mt-10">
               Choose Your Color Palette
             </h2>
 
             <section className="grid grid-cols-2 gap-17 mt-13">
-              {/* Ocean Blue */}
-              <button
-                className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow"
-                style={{
-                  background:
-                    "linear-gradient(to bottom right, #38bdf8 0%, #0ea5e9 33%, #fef3c6 66%, #e5e7eb 100%)",
-                }}
-              >
-                <h3 className="text-2xl font-serif mb-2 mt-2">Ocean Blue</h3>
-                <div className="flex gap-2 mt-3">
-                  <span className="w-8 h-8 bg-sky-400 rounded-full"></span>
-                  <span className="w-8 h-8 bg-sky-600 rounded-full"></span>
-                  <span className="w-8 h-8 bg-amber-100 rounded-full"></span>
-                  <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
-                </div>
-              </button>
+  {/* Ocean Blue */}
+  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+    <div
+      className="w-full h-24 rounded-xl mb-3"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #38bdf8 0%, #0ea5e9 33%, #fef3c6 66%, #e5e7eb 100%)",
+      }}
+    ></div>
+    <h3 className="text-2xl font-serif mb-2">Ocean Blue</h3>
+    <div className="flex gap-2 mt-2">
+      <span className="w-8 h-8 bg-sky-400 rounded-full"></span>
+      <span className="w-8 h-8 bg-sky-600 rounded-full"></span>
+      <span className="w-8 h-8 bg-amber-100 rounded-full"></span>
+      <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
+    </div>
+  </button>
 
-              {/* Purple Dreams */}
-              <button
-                className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow"
-                style={{
-                  background:
-                    "linear-gradient(to bottom right, #c084fc 0%, #9333ea 33%, #f472b6 66%, #f3f4f6 100%)",
-                }}
-              >
-                <h3 className="text-2xl font-serif mb-2 mt-2">Purple Dreams</h3>
-                <div className="flex gap-2 mt-3">
-                  <span className="w-8 h-8 bg-purple-400 rounded-full"></span>
-                  <span className="w-8 h-8 bg-purple-600 rounded-full"></span>
-                  <span className="w-8 h-8 bg-pink-300 rounded-full"></span>
-                  <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
-                </div>
-              </button>
+  {/* Purple Dreams */}
+  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+    <div
+      className="w-full h-24 rounded-xl mb-3"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #c084fc 0%, #9333ea 33%, #f472b6 66%, #f3f4f6 100%)",
+      }}
+    ></div>
+    <h3 className="text-2xl font-serif mb-2">Purple Dreams</h3>
+    <div className="flex gap-2 mt-2">
+      <span className="w-8 h-8 bg-purple-400 rounded-full"></span>
+      <span className="w-8 h-8 bg-purple-600 rounded-full"></span>
+      <span className="w-8 h-8 bg-pink-300 rounded-full"></span>
+      <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
+    </div>
+  </button>
 
-              {/* Forest Green */}
-              <button
-                className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow"
-                style={{
-                  background:
-                    "linear-gradient(to bottom right, #22c55e 0%, #15803d 33%, #86efac 66%, #f3f4f6 100%)",
-                }}
-              >
-                <h3 className="text-2xl font-serif mb-2 mt-2">Forest Green</h3>
-                <div className="flex gap-2 mt-3">
-                  <span className="w-8 h-8 bg-green-500 rounded-full"></span>
-                  <span className="w-8 h-8 bg-green-700 rounded-full"></span>
-                  <span className="w-8 h-8 bg-emerald-300 rounded-full"></span>
-                  <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
-                </div>
-              </button>
+  {/* Forest Green */}
+  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+    <div
+      className="w-full h-24 rounded-xl mb-3"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #22c55e 0%, #15803d 33%, #86efac 66%, #f3f4f6 100%)",
+      }}
+    ></div>
+    <h3 className="text-2xl font-serif mb-2">Forest Green</h3>
+    <div className="flex gap-2 mt-2">
+      <span className="w-8 h-8 bg-green-500 rounded-full"></span>
+      <span className="w-8 h-8 bg-green-700 rounded-full"></span>
+      <span className="w-8 h-8 bg-emerald-300 rounded-full"></span>
+      <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
+    </div>
+  </button>
 
-              {/* Sunset Orange */}
-              <button
-                className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow"
-                style={{
-                  background:
-                    "linear-gradient(to bottom right, #fb923c 0%, #ea580c 33%, #fecaca 66%, #f3f4f6 100%)",
-                }}
-              >
-                <h3 className="text-2xl font-serif mb-2 mt-2">Sunset Orange</h3>
-                <div className="flex gap-2 mt-3">
-                  <span className="w-8 h-8 bg-orange-400 rounded-full"></span>
-                  <span className="w-8 h-8 bg-orange-600 rounded-full"></span>
-                  <span className="w-8 h-8 bg-red-300 rounded-full"></span>
-                  <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
-                </div>
-              </button>
-            </section>
+  {/* Sunset Orange */}
+  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+    <div
+      className="w-full h-24 rounded-xl mb-3"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #fb923c 0%, #ea580c 33%, #fecaca 66%, #f3f4f6 100%)",
+      }}
+    ></div>
+    <h3 className="text-2xl font-serif mb-2">Sunset Orange</h3>
+    <div className="flex gap-2 mt-2">
+      <span className="w-8 h-8 bg-orange-400 rounded-full"></span>
+      <span className="w-8 h-8 bg-orange-600 rounded-full"></span>
+      <span className="w-8 h-8 bg-red-300 rounded-full"></span>
+      <span className="w-8 h-8 bg-gray-200 rounded-full"></span>
+    </div>
+  </button>
+</section>
+
           </article>
           <article className="bg-white border-1 border-gray-200 rounded-xl shadow-2xl w-300 mx-45 mt-18 h-200 flex flex-col items-center">
             <h2 className="text-3xl font-bold text-slate-800 mb-3 flex items-center justify-center mt-10">
