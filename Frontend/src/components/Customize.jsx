@@ -1,5 +1,10 @@
 import style from "../assets/style.png";
-
+import {
+  SparklesIcon,
+  AdjustmentsHorizontalIcon,
+  BuildingOfficeIcon,
+  CodeBracketIcon
+} from "@heroicons/react/24/solid";
 function Customize() {
   return (
     <main className="barba-wrapper">
@@ -194,7 +199,8 @@ function Customize() {
               Choose Your Template Stlye
             </h2>
             <section className="grid grid-cols-2 gap-17 mt-13">
-              <button className="flex flex-col border-2 p-10 bg-pink-100 cursor-pointer w-100 rounded-2xl hover:shadow-lg transition-shadow">
+              <button className="flex flex-col items-center border-2 p-10 bg-pink-100 cursor-pointer w-100 rounded-2xl hover:shadow-lg transition-shadow">
+                <SparklesIcon className=" w-10 h-10"/>
                 <h3 className="text-2xl font-bold font-sans mb-2">Creative</h3>
                 <div className="flex flex-col gap-2 mt-3">
                   <span className="text-center text-md font-bold">
@@ -209,7 +215,8 @@ function Customize() {
                 </div>
               </button>
 
-              <button className="flex flex-col border-2 p-10 cursor-pointer w-100 bg-gray-200 rounded-2xl hover:shadow-lg transition-shadow">
+              <button className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 bg-gray-200 rounded-2xl hover:shadow-lg transition-shadow">
+                <AdjustmentsHorizontalIcon className=" w-10 h-10"/>
                 <h3 className="text-2xl font-bold font-sans mb-2">Minimalist</h3>
                 <div className="flex flex-col gap-2 mt-3">
                   <span className="text-center text-md font-bold">
@@ -224,7 +231,8 @@ function Customize() {
                 </div>
               </button>
 
-              <button className="flex flex-col border-2 p-10 cursor-pointer w-100 rounded-2xl bg-sky-100 hover:shadow-lg transition-shadow">
+              <button className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 rounded-2xl bg-sky-100 hover:shadow-lg transition-shadow">
+                <BuildingOfficeIcon className=" w-10 h-10"/>
                 <h3 className="text-2xl font-bold font-sans mb-2">Corporate</h3>
                 <div className="flex flex-col gap-2 mt-3">
                   <span className="text-center text-md font-bold">
@@ -239,7 +247,8 @@ function Customize() {
                 </div>
               </button>
 
-              <button className="flex flex-col border-2 p-10 cursor-pointer w-100 rounded-2xl bg-green-100 hover:shadow-lg transition-shadow">
+              <button className="flex flex-col items-center border-2 p-10 cursor-pointer w-100 rounded-2xl bg-green-100 hover:shadow-lg transition-shadow">
+                <CodeBracketIcon className=" w-10 h-10"/>
                 <h3 className="text-2xl font-bold font-sans mb-2">Developer</h3>
                 <div className="flex flex-col gap-2 mt-3">
                   <span className="text-center text-md font-bold">
