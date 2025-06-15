@@ -30,14 +30,14 @@ function Customize() {
         </header>
 
         <section className="bg-gray-50 h-full pt-17 mb-5">
-          <article className="bg-white border-1 border-gray-200 rounded-xl shadow-2xl w-300 mx-45 h-171 flex flex-col items-center">
+          <article className="bg-white border-1 border-gray-200 rounded-xl shadow-2xl w-300 mx-45 h-180 flex flex-col items-center">
             <h2 className="text-center text-3xl font-bold mt-10">
               Choose Your Color Palette
             </h2>
 
             <section className="grid grid-cols-2 gap-17 mt-13">
   {/* Ocean Blue */}
-  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+  <button className="flex flex-col items-center border-2 border-gray-200 shadow-2xl cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
     <div
       className="w-full h-24 rounded-xl mb-3"
       style={{
@@ -55,7 +55,7 @@ function Customize() {
   </button>
 
   {/* Purple Dreams */}
-  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+  <button className="flex flex-col items-center border-2 border-gray-200 shadow-2xl cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
     <div
       className="w-full h-24 rounded-xl mb-3"
       style={{
@@ -73,7 +73,7 @@ function Customize() {
   </button>
 
   {/* Forest Green */}
-  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+  <button className="flex flex-col items-center border-2 border-gray-200 shadow-2xl cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
     <div
       className="w-full h-24 rounded-xl mb-3"
       style={{
@@ -91,7 +91,7 @@ function Customize() {
   </button>
 
   {/* Sunset Orange */}
-  <button className="flex flex-col items-center border-2 cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
+  <button className="flex flex-col items-center border-2 border-gray-200 shadow-2xl cursor-pointer w-100 hover:shadow-lg rounded-2xl transition-shadow p-4">
     <div
       className="w-full h-24 rounded-xl mb-3"
       style={{
