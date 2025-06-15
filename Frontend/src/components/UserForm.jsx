@@ -17,6 +17,7 @@ export default function UserForm() {
     professional: false,
     projects: false,
   });
+  const [profileImage, setProfileImage] = useState(null);
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -27,6 +28,13 @@ export default function UserForm() {
 
   const handlePreviousPage = () => navigate("/");
   const handleNextPage = () => navigate("/style");
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setProfileImage(URL.createObjectURL(file));
+    }
+  };
 
   const renderFormSection = (icon, title, section, children) => (
     <div className="flex justify-center mt-8">
@@ -71,7 +79,62 @@ export default function UserForm() {
         "Basic Information",
         "basic",
         <form className="space-y-4 ">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center justify-between gap-4">
+            <h1 className="text-center font-bold text-lg text-gray-600">
+              Profile photo
+            </h1>
+            <div className="w-32 h-32 rounded-full bg-gray-100 border-4 border-dashed mb-5 border-gray-300 flex items-center justify-center overflow-hidden">
+              {profileImage ? (
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
+                  />
+                </svg>
+              )}
+            </div>
+            <label
+              htmlFor="profile-pic"
+              className="flex items-center cursor-pointer"
+            >
+              <span className="border border-gray-300 rounded-2xl p-5 bg-blue-500 text-white cursor-pointer hover:bg-blue-600 transition-colors flex items-center gap-2">
+                <ArrowUpTrayIcon className="w-5 h-5 text-white" />
+                Upload Image
+              </span>
+              <input
+                id="profile-pic"
+                type="file"
+                name="myFile"
+                accept=".jpg,.jpeg,.png"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </label>
+            <span className="ml-5 text-gray-500 text-sm">
+              JPG, PNG
+            </span>
+          </div>
+
+          <div className="flex items-center mt-8 justify-between">
             <div className="flex flex-col">
               <label className="block text-sm font-medium text-gray-700">
                 Full Name
