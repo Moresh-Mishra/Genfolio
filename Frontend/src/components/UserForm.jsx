@@ -7,6 +7,7 @@ import {
   BriefcaseIcon,
   FolderIcon,
   ArrowUpTrayIcon,
+  HashtagIcon,
 } from "@heroicons/react/24/solid";
 
 export default function UserForm() {
@@ -18,6 +19,41 @@ export default function UserForm() {
     projects: false,
   });
   const [profileImage, setProfileImage] = useState(null);
+  const [aboutMe, setAboutMe] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async () => {
+  setLoading(true);
+  try {
+    const response = await fetch(
+      "https://moresh-shubhu.app.n8n.cloud/webhook-test/040f44f2-faaf-4faf-8807-960065d4acc6",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          input: aboutMe 
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch response from server");
+    }
+
+    const data = await response.json();
+    console.log("Generated About Me:", data.output);
+    if (data.output) {
+      setAboutMe(data.output); // Replaces textarea content
+    }
+  } catch (error) {
+    console.error("Error generating About Me:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -129,9 +165,7 @@ export default function UserForm() {
                 onChange={handleImageUpload}
               />
             </label>
-            <span className="ml-5 text-gray-500 text-sm">
-              JPG, PNG
-            </span>
+            <span className="ml-5 text-gray-500 text-sm">JPG, PNG</span>
           </div>
 
           <div className="flex items-center mt-8 justify-between">
@@ -197,26 +231,25 @@ export default function UserForm() {
         "About & Skills",
         "about",
         <form className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">
-                About Me
-              </label>
-              <textarea
-                className="mt-1 block w-[652px] h-[125px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                placeholder="Tell us about yourself..."
-              />
-            </div>
-          </div>
           <div className="flex flex-col">
-            <label className="block text-sm font-medium text-gray-700">
-              Skills<span className="text-red-600">*</span>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              About Me
             </label>
             <textarea
-              className="mt-1 block w-[652px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-              placeholder="List your skills..."
-              required={true}
+              className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              value={aboutMe}
+              onChange={(e) => setAboutMe(e.target.value)}
+              placeholder="Write about yourself or click 'Generate with AI'"
+              rows={6}
             />
+
+            <button
+              type="button"
+              onClick={handleGenerate}
+              className="mt-2 self-start px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition"
+            >
+              {loading ? "Generating..." : "Generate with AI"}
+            </button>
           </div>
         </form>
       )}
@@ -283,6 +316,47 @@ export default function UserForm() {
                 className="hidden"
               />
             </label>
+          </div>
+        </form>
+      )}
+      {renderFormSection(
+        <HashtagIcon className="w-10 h-10" />,
+        "Social Links",
+        "basic",
+        <form className="space-y-4 ">
+          <div className="flex items-center mt-8 justify-between">
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">
+                Github Link
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-[250px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400 max-w-[300px]"
+                placeholder="https://github.com/username"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700 ">
+                LinkedIn Link
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-[250px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                placeholder="https://linkedin.com/in/username"
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">
+                X (Twitter) Link
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-[250px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                placeholder="https://twitter.com/username"
+              />
+            </div>
           </div>
         </form>
       )}
