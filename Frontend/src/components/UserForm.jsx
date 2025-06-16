@@ -242,7 +242,7 @@ export default function UserForm() {
               About Me
             </label>
             <textarea
-              className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2focus:ring-amber-400"
               value={aboutMe}
               onChange={(e) => setAboutMe(e.target.value)}
               placeholder="Write about yourself or click 'Generate with AI'"
@@ -252,7 +252,7 @@ export default function UserForm() {
             <button
               type="button"
               onClick={handleGenerate}
-              className="mt-2 self-start px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition"
+              className="mt-2 self-start px-4 py-2 bg-amber-500 cursor-pointer text-white rounded hover:bg-amber-600 transition"
             >
               {loading ? "Generating..." : "Generate with AI"}
             </button>

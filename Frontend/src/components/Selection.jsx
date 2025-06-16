@@ -167,11 +167,11 @@ const Selection = () => {
 
       {/* Customize Content for Option 2 */}
       {selectedOption === 'custom' && (
-        <div className="w-full mt-8">
-          <header className="bg-gradient-to-bl from-pink-100 to-blue-100 py-16 mb-8 rounded-2xl">
+        <div className="mt-8">
+          <header className="bg-gradient-to-bl from-pink-100 to-blue-100 py-16 mb-13 rounded-2xl">
             <div className="flex flex-col items-center">
               <img
-                className="border-1 w-18 rounded-3xl bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 animate-bounce mb-4 p-2"
+                className="border-1 w-16 rounded-3xl bg-gradient-to-br from-pink-400 via-purple-400 to-blue-500 animate-bounce mb-4 p-2"
                 src={style}
                 alt="Style icon"
               />
