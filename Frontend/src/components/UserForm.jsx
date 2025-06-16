@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PhoneInput from "react-phone-number-input";
+import 'react-phone-number-input/style.css';
 import { useNavigate } from "react-router-dom";
 import user5 from "../assets/user5.png";
 import {
@@ -21,39 +23,39 @@ export default function UserForm() {
   const [profileImage, setProfileImage] = useState(null);
   const [aboutMe, setAboutMe] = useState("");
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState();
 
   const handleGenerate = async () => {
-  setLoading(true);
-  try {
-    const response = await fetch(
-      "https://moresh-shubhu.app.n8n.cloud/webhook-test/040f44f2-faaf-4faf-8807-960065d4acc6",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          input: aboutMe 
-        }),
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://moresh-shubhu.app.n8n.cloud/webhook-test/040f44f2-faaf-4faf-8807-960065d4acc6",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            input: aboutMe,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch response from server");
       }
-    );
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch response from server");
+      const data = await response.json();
+      console.log("Generated About Me:", data.output);
+      if (data.output) {
+        setAboutMe(data.output); // Replaces textarea content
+      }
+    } catch (error) {
+      console.error("Error generating About Me:", error);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.json();
-    console.log("Generated About Me:", data.output);
-    if (data.output) {
-      setAboutMe(data.output); // Replaces textarea content
-    }
-  } catch (error) {
-    console.error("Error generating About Me:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -206,10 +208,14 @@ export default function UserForm() {
               <label className="block text-sm font-medium text-gray-700">
                 Phone Number
               </label>
-              <input
-                type="number"
+              <PhoneInput
+                placeholder="Enter phone number"
                 className="mt-1 block w-[250px] border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                placeholder="+91 1234567890"
+                value={value}
+                onChange={setValue}
+                defaultCountry="IN"
+                international
+                countryCallingCodeEditable={false}
               />
             </div>
           </div>
