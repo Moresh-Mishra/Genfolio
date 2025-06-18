@@ -7,10 +7,17 @@ import {
   BuildingOfficeIcon,
   CodeBracketIcon
 } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
 const Selection = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const imageRef = useRef(null);
+
+  const navigate = useNavigate();
+   const minimalistTemplate = () => navigate('/minimalist');
+   const creativeTemplate = () => navigate('/creative');
+   const corporateTemplate = () => navigate('/corporate');
+   const developerTemplate = () => navigate('/developer');
 
   useEffect(() => {
     if (imageRef.current) {
@@ -101,7 +108,7 @@ const Selection = () => {
               Choose Your Template Style
             </h2>
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <button className="flex flex-col items-center border-2 p-8 bg-pink-100 cursor-pointer rounded-2xl hover:shadow-lg transition-shadow">
+              <button onClick={creativeTemplate} className="flex flex-col items-center border-2 p-8 bg-pink-100 cursor-pointer rounded-2xl hover:shadow-lg transition-shadow">
                 <SparklesIcon className="w-12 h-12 mb-4"/>
                 <h3 className="text-2xl font-bold font-sans mb-4">Creative</h3>
                 <div className="flex flex-col gap-3">
@@ -116,7 +123,7 @@ const Selection = () => {
                 </div>
               </button>
 
-              <button className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-gray-200 hover:shadow-lg transition-shadow">
+              <button onClick={minimalistTemplate} className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-gray-200 hover:shadow-lg transition-shadow">
                 <AdjustmentsHorizontalIcon className="w-12 h-12 mb-4"/>
                 <h3 className="text-2xl font-bold font-sans mb-4">Minimalist</h3>
                 <div className="flex flex-col gap-3">
@@ -131,7 +138,7 @@ const Selection = () => {
                 </div>
               </button>
 
-              <button className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-sky-100 hover:shadow-lg transition-shadow">
+              <button onClick={corporateTemplate} className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-sky-100 hover:shadow-lg transition-shadow">
                 <BuildingOfficeIcon className="w-12 h-12 mb-4"/>
                 <h3 className="text-2xl font-bold font-sans mb-4">Corporate</h3>
                 <div className="flex flex-col gap-3">
@@ -146,7 +153,7 @@ const Selection = () => {
                 </div>
               </button>
 
-              <button className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-green-100 hover:shadow-lg transition-shadow">
+              <button onClick={developerTemplate} className="flex flex-col items-center border-2 p-8 cursor-pointer rounded-2xl bg-green-100 hover:shadow-lg transition-shadow">
                 <CodeBracketIcon className="w-12 h-12 mb-4"/>
                 <h3 className="text-2xl font-bold font-sans mb-4">Developer</h3>
                 <div className="flex flex-col gap-3">

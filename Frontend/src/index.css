@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 1.5s ease-in-out infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.15); }
+}
+.animate-flash {
+  animation: flash 0.8s linear infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+  50% { box-shadow: 0 0 16px 4px rgba(255,255,255,0.9); }
+}
+.animate-sparkle {
+  animation: sparkle 1.2s ease-in-out infinite;
+}
+
+.animate-float-on-hover:hover {
+  animation: float 1.5s ease-in-out infinite;
+}
+.animate-flash-on-hover:hover {
+  animation: flash 0.8s linear infinite;
+}
+.animate-sparkle-on-hover:hover {
+  animation: sparkle 1.2s ease-in-out infinite;
+}
