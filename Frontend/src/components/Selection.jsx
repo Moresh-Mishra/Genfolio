@@ -14,10 +14,22 @@ const Selection = () => {
   const imageRef = useRef(null);
 
   const navigate = useNavigate();
-   const minimalistTemplate = () => navigate('/minimalist');
-   const creativeTemplate = () => navigate('/creative');
-   const corporateTemplate = () => navigate('/corporate');
-   const developerTemplate = () => navigate('/developer');
+   const minimalistTemplate = () => {
+     window.scrollTo(0, 0);
+     navigate('/minimalist');
+   };
+   const creativeTemplate = () => {
+     window.scrollTo(0, 0);
+     navigate('/creative');
+   };
+   const corporateTemplate = () => {
+     window.scrollTo(0, 0);
+     navigate('/corporate');
+   };
+   const developerTemplate = () => {
+     window.scrollTo(0, 0);
+     navigate('/developer');
+   };
 
   useEffect(() => {
     if (imageRef.current) {

@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 8s linear infinite',
+        'spin-slow': 'spin 3s linear infinite',
         'blob': 'blob 7s infinite',
       },
       keyframes: {
