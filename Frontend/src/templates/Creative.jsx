@@ -1,7 +1,7 @@
 import Header from "../navbar/Header";
 import user5 from "../assets/user5.png"
 import Footer from "../navbar/Footer";
-import { AcademicCapIcon, BriefcaseIcon, FolderIcon } from "@heroicons/react/24/solid";
+import { AcademicCapIcon, BriefcaseIcon, FolderIcon,} from "@heroicons/react/24/solid";
 
 function Creative()
 {

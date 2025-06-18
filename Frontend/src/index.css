@@ -50,9 +50,6 @@
   50% { transform: translateY(-15px); }
 }
 .animate-bounce {
-  animation: none;
-}
-.group:hover .animate-bounce {
   animation: bounce 2s ease-in-out infinite;
 }
 
