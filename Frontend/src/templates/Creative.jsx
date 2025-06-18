@@ -2,15 +2,39 @@ import Header from "../navbar/Header";
 import user5 from "../assets/user5.png"
 import Footer from "../navbar/Footer";
 import { AcademicCapIcon, BriefcaseIcon, FolderIcon,} from "@heroicons/react/24/solid";
+import Particles from "react-tsparticles";
+import { useCallback } from "react";
+import { loadFull } from "tsparticles";
 
 function Creative()
 {
     return(
         <>
         <Header />
-        <div className="bg-gradient-to-br w-full min-h-screen from-purple-600 via-blue-900 to-blue-600">
-            <div className="flex flex-col items-center justify-center">
+        <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#5a2496] via-[#1e267c] to-[#1a3a8c]">
+            {/* Blurred gradient spots for background depth */}
+            <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-800 rounded-full opacity-40 blur-3xl pointer-events-none"></div>
+            <div className="absolute top-[10%] right-[-10%] w-[350px] h-[350px] bg-blue-900 rounded-full opacity-30 blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-indigo-900 rounded-full opacity-30 blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[350px] h-[350px] bg-blue-800 rounded-full opacity-30 blur-3xl pointer-events-none"></div>
+            <div className="relative flex flex-col items-center justify-center">
                 <div className="relative w-40 h-40 mt-15 mb-2">
+                    {/* Spark Icon (top right, yellow, smaller, closer to border) */}
+                    <div className="absolute -top-3 -right-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sparkles h-8 w-8 text-yellow-300 animate-bounce">
+                            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+                            <path d="M20 3v4"></path>
+                            <path d="M22 5h-4"></path>
+                            <path d="M4 17v2"></path>
+                            <path d="M5 18H3"></path>
+                        </svg>
+                    </div>
+                    {/* Heart Icon (fine-tuned position, left outside border, slightly below center) */}
+                    <div className="absolute left-[-25px] top-[85%] animate-pulse">
+                        <svg className="w-7 h-7 text-pink-400 drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path d="M16.5 4.5c-1.74 0-3.41 1.01-4.5 2.09C10.91 5.51 9.24 4.5 7.5 4.5 4.42 4.5 2 7.02 2 10.08c0 3.77 3.4 6.86 8.55 11.54a2 2 0 0 0 2.9 0C18.6 16.94 22 13.85 22 10.08c0-3.06-2.42-5.58-5.5-5.58z" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </div>
                     <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-purple-500 via-blue-500 to-pink-500 animate-spin-slow"></div>
                     <div className="absolute inset-2 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden"></div>
                 </div>
