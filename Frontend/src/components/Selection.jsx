@@ -7,29 +7,31 @@ import {
   BuildingOfficeIcon,
   CodeBracketIcon
 } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Selection = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const imageRef = useRef(null);
-
   const navigate = useNavigate();
-   const minimalistTemplate = () => {
-     window.scrollTo(0, 0);
-     navigate('/minimalist');
-   };
-   const creativeTemplate = () => {
-     window.scrollTo(0, 0);
-     navigate('/creative');
-   };
-   const corporateTemplate = () => {
-     window.scrollTo(0, 0);
-     navigate('/corporate');
-   };
-   const developerTemplate = () => {
-     window.scrollTo(0, 0);
-     navigate('/developer');
-   };
+  const location = useLocation();
+  const userData = location.state || {};
+
+  const minimalistTemplate = () => {
+    window.scrollTo(0, 0);
+    navigate('/minimalist', { state: userData });
+  };
+  const creativeTemplate = () => {
+    window.scrollTo(0, 0);
+    navigate('/creative', { state: userData });
+  };
+  const corporateTemplate = () => {
+    window.scrollTo(0, 0);
+    navigate('/corporate', { state: userData });
+  };
+  const developerTemplate = () => {
+    window.scrollTo(0, 0);
+    navigate('/developer', { state: userData });
+  };
 
   useEffect(() => {
     if (imageRef.current) {
