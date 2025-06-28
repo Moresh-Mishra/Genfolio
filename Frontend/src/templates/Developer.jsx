@@ -160,7 +160,7 @@ function Developer() {
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
                 <h2 className="text-emerald-500 p-1">Featured Work</h2>
-                <p className="text-gray-300">{user.projects}</p>
+                <p className="text-gray-300 w-[340px]">{user.projects}</p>
               </div>
             </div>
 
@@ -175,7 +175,7 @@ function Developer() {
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
                 <h2 className="text-emerald-500 p-1">Learning Path</h2>
-                <p className="text-gray-300">{user.education}</p>
+                <p className="text-gray-300 w-[340px]">{user.education}</p>
               </div>
             </div>
           </div>
