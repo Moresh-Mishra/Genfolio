@@ -37,6 +37,7 @@ export default function UserForm() {
     github: "",
     linkedin: "",
     twitter: "",
+    skills: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -284,6 +285,19 @@ export default function UserForm() {
               >
                 {loading ? "Generating..." : "Generate with AI"}
               </button>
+            </div>
+            <div className="flex flex-col mt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Skills
+              </label>
+              <textarea
+                name="skills"
+                value={formData.skills}
+                onChange={handleChange}
+                className="block w-full border border-gray-300 rounded-md p-2"
+                placeholder="List your skills, technologies, and expertise"
+                rows={4}
+              />
             </div>
           </>
         )}
