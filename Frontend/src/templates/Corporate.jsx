@@ -126,11 +126,21 @@ export default function Corporate() {
                   <h1 className=" text-2xl p-2">Core Competencies</h1>
                 </div>
                 <ol className="flex flex-col w-auto list-disc ml-8 [&>li::marker]:text-blue-300">
-                  <li className=" p-3 rounded-2xl">Java</li>
-                  <li className=" p-3 rounded-2xl">C++</li>
-                  <li className=" p-3 rounded-2xl">C</li>
-                  <li className=" p-3 rounded-2xl">HTML5</li>
-                  <li className=" p-3 rounded-2xl">CSS3</li>
+                  {user.skills ? (
+              <div className="p-5">
+                <ul className="list-disc list-inside space-y-2">
+                  {user.skills.split(",").map((skill, index) => (
+                    <li key={index} className="text-lg text-gray-800">
+                      {skill.trim()}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <span className="text-xl p-5 text-gray-500">
+                No skills listed
+              </span>
+            )}
                 </ol>
               </div>
 
