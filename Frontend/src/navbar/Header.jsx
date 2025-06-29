@@ -1,7 +1,8 @@
 import { ArrowDownTrayIcon, ArrowLeftIcon, ShareIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
+import  Download  from './Download';
 
-function Header() {
+function Header({pdfRef, fileName}) {
   const navigate = useNavigate();
 
   const home = () => navigate('/');
@@ -16,10 +17,7 @@ function Header() {
         </button>
 
         {/* Share - Right side */}
-        <button className="flex cursor-pointer  items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-          <ArrowDownTrayIcon className="w-5 h-5" />
-          Download
-        </button>
+        <Download targetRef={pdfRef} fileName={fileName}/>
       </div>
     </div>
   );

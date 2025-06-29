@@ -1,5 +1,6 @@
 import Header from "../navbar/Header";
 import Footer from "../navbar/Footer";
+import { useRef } from 'react';
 import {
   EnvelopeIcon,
   PhoneIcon,
@@ -17,10 +18,12 @@ export default function Corporate() {
       .then((data) => setUser(data));
   }, []);
   console.log(user);
+
+   const pdfRef = useRef(null);
   return (
     <>
-      <Header />
-      <div>
+      <Header pdfRef={pdfRef}  fileName="Myportfolio.pdf"/>
+      <div ref={pdfRef}>
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}
           <div className="flex items-center text-white">
