@@ -1,6 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+const path = require('path');
+
+// Load environment variables
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+// Debug: Check if environment variables are loaded
+console.log('Environment check:');
+console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY);
+console.log('GROQ_API_KEY length:', process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.length : 0);
 
 const app = express();
 
@@ -22,6 +30,12 @@ app.post('/generate-about', async (req, res) => {
   const { input } = req.body;
   if (!input) {
     return res.status(400).json({ error: 'Input is required' });
+  }
+  
+  // Check if API key is configured
+  if (!process.env.GROQ_API_KEY) {
+    console.error('GROQ_API_KEY is not set in environment variables');
+    return res.status(500).json({ error: 'API key not configured. Please set GROQ_API_KEY in your .env file.' });
   }
   
   // Simple length-based token determination
@@ -59,7 +73,9 @@ app.post('/generate-about', async (req, res) => {
     });
     
     if (!groqResponse.ok) {
-      throw new Error(`Groq API error: ${groqResponse.status}`);
+      const errorText = await groqResponse.text();
+      console.error('Groq API error response:', errorText);
+      throw new Error(`Groq API error: ${groqResponse.status} - ${errorText}`);
     }
     
     const data = await groqResponse.json();
@@ -67,7 +83,7 @@ app.post('/generate-about', async (req, res) => {
     res.json({ output });
   } catch (error) {
     console.error('Error calling Groq API:', error);
-    res.status(500).json({ error: 'Failed to generate About Me' });
+    res.status(500).json({ error: 'Failed to generate About Me. Please check your API key and try again.' });
   }
 });
 

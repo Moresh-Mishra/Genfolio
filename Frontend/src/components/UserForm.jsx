@@ -71,19 +71,26 @@ export default function UserForm() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://moresh-shubhu.app.n8n.cloud/webhook-test/040f44f2-faaf-4faf-8807-960065d4acc6",
+        "http://localhost:5000/generate-about",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ input: formData.aboutMe }),
         }
       );
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate About Me');
+      }
+      
       const data = await response.json();
       if (data.output) {
         setFormData((prev) => ({ ...prev, aboutMe: data.output }));
       }
     } catch (error) {
       console.error("Error generating About Me:", error);
+      alert(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
