@@ -41,10 +41,17 @@ export default function UserForm() {
   });
   const [loading, setLoading] = useState(false);
   const [originalInput, setOriginalInput] = useState(""); // Track original input for regeneration
+  const [hasGenerated, setHasGenerated] = useState(false); // Track if generation has been used
 
   // Generic handler for text/textarea inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    // Reset generation state if user changes the aboutMe input
+    if (e.target.name === 'aboutMe' && hasGenerated) {
+      setHasGenerated(false);
+      setOriginalInput("");
+    }
   };
 
   // Handler for phone input
@@ -96,6 +103,7 @@ export default function UserForm() {
       const data = await response.json();
       if (data.output) {
         setFormData((prev) => ({ ...prev, aboutMe: data.output }));
+        setHasGenerated(true); // Mark that generation has been used
       }
     } catch (error) {
       console.error("Error generating About Me:", error);
@@ -333,9 +341,10 @@ export default function UserForm() {
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="px-4 py-2 bg-amber-500 cursor-pointer text-white rounded hover:bg-amber-600 transition"
+                  disabled={loading || hasGenerated}
+                  className="px-4 py-2 bg-amber-500 cursor-pointer text-white rounded hover:bg-amber-600 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400"
                 >
-                  {loading ? "Generating..." : "Generate with AI"}
+                  {loading ? "Generating..." : hasGenerated ? "Generated" : "Generate with AI"}
                 </button>
                 {originalInput && (
                   <button
