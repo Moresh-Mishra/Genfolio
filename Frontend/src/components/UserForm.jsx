@@ -40,10 +40,18 @@ export default function UserForm() {
     skills: "",
   });
   const [loading, setLoading] = useState(false);
+  const [originalInput, setOriginalInput] = useState(""); // Track original input for regeneration
+  const [hasGenerated, setHasGenerated] = useState(false); // Track if generation has been used
 
   // Generic handler for text/textarea inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    // Reset generation state if user changes the aboutMe input
+    if (e.target.name === 'aboutMe' && hasGenerated) {
+      setHasGenerated(false);
+      setOriginalInput("");
+    }
   };
 
   // Handler for phone input
@@ -68,22 +76,73 @@ export default function UserForm() {
 
   // About Me AI generation
   const handleGenerate = async () => {
+    if (!formData.aboutMe.trim()) {
+      alert("Please enter some information about yourself first.");
+      return;
+    }
+    
     setLoading(true);
+    // Store the original input before making the API call
+    setOriginalInput(formData.aboutMe);
+    
     try {
       const response = await fetch(
-        "https://moresh-shubhu.app.n8n.cloud/webhook-test/040f44f2-faaf-4faf-8807-960065d4acc6",
+        "http://localhost:5000/generate-about",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ input: formData.aboutMe }),
         }
       );
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate About Me');
+      }
+      
+      const data = await response.json();
+      if (data.output) {
+        setFormData((prev) => ({ ...prev, aboutMe: data.output }));
+        setHasGenerated(true); // Mark that generation has been used
+      }
+    } catch (error) {
+      console.error("Error generating About Me:", error);
+      alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Try Again function - uses original input
+  const handleTryAgain = async () => {
+    if (!originalInput) {
+      alert("No original input available. Please generate first.");
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "http://localhost:5000/generate-about",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input: originalInput }),
+        }
+      );
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate About Me');
+      }
+      
       const data = await response.json();
       if (data.output) {
         setFormData((prev) => ({ ...prev, aboutMe: data.output }));
       }
     } catch (error) {
-      console.error("Error generating About Me:", error);
+      console.error("Error regenerating About Me:", error);
+      alert(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -278,13 +337,26 @@ export default function UserForm() {
                 placeholder="Write about yourself or click 'Generate with AI'"
                 rows={6}
               />
-              <button
-                type="button"
-                onClick={handleGenerate}
-                className="mt-2 self-start px-4 py-2 bg-amber-500 cursor-pointer text-white rounded hover:bg-amber-600 transition"
-              >
-                {loading ? "Generating..." : "Generate with AI"}
-              </button>
+              <div className="flex gap-2 mt-2">
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={loading || hasGenerated}
+                  className="px-4 py-2 bg-amber-500 cursor-pointer text-white rounded hover:bg-amber-600 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400"
+                >
+                  {loading ? "Generating..." : hasGenerated ? "Generated" : "Generate with AI"}
+                </button>
+                {originalInput && (
+                  <button
+                    type="button"
+                    onClick={handleTryAgain}
+                    disabled={loading}
+                    className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? "Generating..." : "Try Again"}
+                  </button>
+                )}
+              </div>
             </div>
             <div className="flex flex-col mt-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
