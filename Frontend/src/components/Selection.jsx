@@ -18,19 +18,39 @@ const Selection = () => {
 
   const minimalistTemplate = () => {
     window.scrollTo(0, 0);
-    navigate('/minimalist', { state: userData });
+    const portfolioId = userData.portfolioId || localStorage.getItem('currentPortfolioId');
+    if (portfolioId) {
+      navigate(`/minimalist/${portfolioId}`, { state: userData });
+    } else {
+      navigate('/minimalist', { state: userData });
+    }
   };
   const creativeTemplate = () => {
     window.scrollTo(0, 0);
-    navigate('/creative', { state: userData });
+    const portfolioId = userData.portfolioId || localStorage.getItem('currentPortfolioId');
+    if (portfolioId) {
+      navigate(`/creative/${portfolioId}`, { state: userData });
+    } else {
+      navigate('/creative', { state: userData });
+    }
   };
   const corporateTemplate = () => {
     window.scrollTo(0, 0);
-    navigate('/corporate', { state: userData });
+    const portfolioId = userData.portfolioId || localStorage.getItem('currentPortfolioId');
+    if (portfolioId) {
+      navigate(`/corporate/${portfolioId}`, { state: userData });
+    } else {
+      navigate('/corporate', { state: userData });
+    }
   };
   const developerTemplate = () => {
     window.scrollTo(0, 0);
-    navigate('/developer', { state: userData });
+    const portfolioId = userData.portfolioId || localStorage.getItem('currentPortfolioId');
+    if (portfolioId) {
+      navigate(`/developer/${portfolioId}`, { state: userData });
+    } else {
+      navigate('/developer', { state: userData });
+    }
   };
 
   useEffect(() => {

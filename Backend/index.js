@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const puppeteer = require('puppeteer');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
 const app = express();
@@ -8,15 +9,42 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(cors());
 
-let userData = {};
+// Store portfolios with UUID keys
+let portfolios = {};
 
 app.post('/user', (req, res) => {
-  userData = req.body;
-  res.json({ success: true });
+  const portfolioId = uuidv4();
+  portfolios[portfolioId] = req.body;
+  res.json({ success: true, portfolioId });
 });
 
 app.get('/user', (req, res) => {
-  res.json(userData);
+  // For backward compatibility, return the first portfolio or empty object
+  const firstPortfolioId = Object.keys(portfolios)[0];
+  res.json(firstPortfolioId ? portfolios[firstPortfolioId] : {});
+});
+
+// New endpoint to get portfolio by ID
+app.get('/portfolio/:id', (req, res) => {
+  const { id } = req.params;
+  const portfolio = portfolios[id];
+  
+  if (!portfolio) {
+    return res.status(404).json({ error: 'Portfolio not found' });
+  }
+  
+  res.json(portfolio);
+});
+
+// New endpoint to get all portfolios (for admin purposes)
+app.get('/portfolios', (req, res) => {
+  const portfolioList = Object.keys(portfolios).map(id => ({
+    id,
+    name: portfolios[id].fullName || 'Unnamed Portfolio',
+    title: portfolios[id].title || '',
+    createdAt: new Date().toISOString()
+  }));
+  res.json(portfolioList);
 });
 
 app.post('/generate-about', async (req, res) => {

@@ -10,18 +10,35 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 function Developer() {
 
     const location = useLocation();
+    const { portfolioId } = useParams(); // Get portfolio ID from URL
     const [user, setUser] = useState(location.state || {});
   
     useEffect(() => {
       const fetchUserData = async () => {
-        if (!location.state || Object.keys(location.state).length === 0) {
+        // If we have a portfolio ID in the URL, fetch that specific portfolio
+        if (portfolioId) {
           try {
-            const response = await fetch("https://localhost:5000/user");
+            const response = await fetch(`http://localhost:5000/portfolio/${portfolioId}`);
+            if (response.ok) {
+              const data = await response.json();
+              setUser(data);
+              console.log("Fetched portfolio by ID:", portfolioId);
+            } else {
+              console.error("Portfolio not found");
+            }
+          } catch (error) {
+            console.error("Error fetching portfolio by ID: ", error);
+          }
+        }
+        // Fallback to location.state or fetch from /user endpoint
+        else if (!location.state || Object.keys(location.state).length === 0) {
+          try {
+            const response = await fetch("http://localhost:5000/user");
             const data = await response.json();
             if (data && Object.keys(data).length > 0) {
               setUser(data);
@@ -34,7 +51,7 @@ function Developer() {
       };
   
       fetchUserData();
-    }, [location.state]);
+    }, [location.state, portfolioId]);
 
   return (
     <>

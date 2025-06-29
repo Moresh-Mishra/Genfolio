@@ -19,6 +19,12 @@ const App = () => (
         <Route path="/creative" element={<Creative />} />
         <Route path='/corporate' element={<Corporate />} />
         <Route path='/developer' element={<Developer />} />
+        
+        {/* Dynamic portfolio routes with UUID */}
+        <Route path="/minimalist/:portfolioId" element={<Minimalist />} />
+        <Route path="/creative/:portfolioId" element={<Creative />} />
+        <Route path="/corporate/:portfolioId" element={<Corporate />} />
+        <Route path="/developer/:portfolioId" element={<Developer />} />
       </Routes>
     </div>
   </Router>

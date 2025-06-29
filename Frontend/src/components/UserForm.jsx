@@ -152,12 +152,33 @@ export default function UserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data being stored:', formData);
-    await fetch("http://localhost:5000/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    navigate("/style", { state: formData });
+    
+    try {
+      const response = await fetch("http://localhost:5000/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success && data.portfolioId) {
+        // Store the portfolio ID in localStorage for later use
+        localStorage.setItem('currentPortfolioId', data.portfolioId);
+        // Navigate to style selection with portfolio data and ID
+        navigate("/style", { 
+          state: { 
+            ...formData, 
+            portfolioId: data.portfolioId 
+          } 
+        });
+      } else {
+        throw new Error('Failed to create portfolio');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Failed to save your information. Please try again.');
+    }
   };
 
   // Section toggler
