@@ -9,15 +9,30 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Corporate() {
-  const [user, setUser] = useState({});
+  const location = useLocation();
+  const [user, setUser] = useState(location.state || {});
+
   useEffect(() => {
-    fetch("http://localhost:5000/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
-  console.log(user);
+    const fetchUserData = async () => {
+      if (!location.state || Object.keys(location.state).length === 0) {
+        try {
+          const response = await fetch("https://localhost:5000/user");
+          const data = await response.json();
+          if (data && Object.keys(data).length > 0) {
+            setUser(data);
+            console.log("Fetching Done");
+          }
+        } catch (error) {
+          console.error("Error fetching user Data: ", error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [location.state]);
 
    const pdfRef = useRef(null);
   return (
@@ -92,7 +107,7 @@ export default function Corporate() {
         <div className="flex justify-between">
           <div>
             <div>
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl w-[950px]">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl w-[950px]">
                 <div className="flex p-4 items-center">
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Executive Summary</h1>
@@ -102,7 +117,7 @@ export default function Corporate() {
             </div>
 
             <div>
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl">
                 <div className="flex p-4 items-center">
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Professional Experience</h1>
@@ -112,7 +127,7 @@ export default function Corporate() {
             </div>
 
             <div>
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl">
                 <div className="flex p-4 items-center">
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Key Projects</h1>
@@ -123,7 +138,7 @@ export default function Corporate() {
           </div>
           <div>
             <div className=" flex flex-col w-[500px]">
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl ">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl ">
                 <div className="flex p-4 items-center">
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Core Competencies</h1>
@@ -147,7 +162,7 @@ export default function Corporate() {
                 </ol>
               </div>
 
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl">
                 <div className="flex p-4 items-center">
                   <FolderIcon className="w-10 h-10 rounded-xl p-2  bg-blue-300" />
                   <h1 className=" text-2xl p-2">
@@ -156,7 +171,7 @@ export default function Corporate() {
                 </div>
                 {user.education}
               </div>
-              <div className="flex flex-col p-4  mt-8 shadow-lg ml-8 mr-8 rounded-2xl bg-blue-100">
+              <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl bg-blue-100">
                 <div className="flex p-4 items-center">
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Professional Attributes</h1>

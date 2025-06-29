@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const puppeteer = require('puppeteer');
 require('dotenv').config();
 
 const app = express();
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '50mb' }));
 app.use(cors());
 
 let userData = {};
@@ -75,6 +76,94 @@ app.post('/generate-about', async (req, res) => {
   } catch (error) {
     console.error('Error calling Groq API:', error);
     res.status(500).json({ error: 'Failed to generate About Me' });
+  }
+});
+
+app.post('/generate-pdf', async (req, res) => {
+  const { html, fileName = 'portfolio.pdf' } = req.body;
+  
+  if (!html) {
+    return res.status(400).json({ error: 'HTML content is required' });
+  }
+
+  let browser;
+  try {
+    // Launch browser
+    browser = await puppeteer.launch({
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    const page = await browser.newPage();
+
+    // Define PDF page dimensions (A4 size in pixels at 96 DPI)
+    const PAGE_WIDTH = 1600;
+    const PAGE_HEIGHT = 1123;
+
+    // Set a large desktop viewport - wider to prevent side cutting
+    await page.setViewport({ width: 1600, height: 2000 });
+
+    // Remove or override the mobile viewport meta tag
+    let desktopHtml = html.replace(
+      /<meta[^>]*name=["']viewport["'][^>]*>/i,
+      '<meta name="viewport" content="width=1600">'
+    );
+
+    // Set content and wait for any dynamic content to load
+    await page.setContent(desktopHtml, { waitUntil: 'networkidle0' });
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Calculate content bounding box and scale to fit one page
+    const { contentWidth, contentHeight } = await page.evaluate(() => {
+      const body = document.body;
+      const rect = body.getBoundingClientRect();
+      return {
+        contentWidth: rect.width,
+        contentHeight: rect.height
+      };
+    });
+
+    // Compute scale factors for width and height, use the smaller one
+    const scaleX = PAGE_WIDTH / contentWidth;
+    const scaleY = PAGE_HEIGHT / contentHeight;
+    const scale = Math.min(scaleX, scaleY, 1); // Don't upscale, only downscale if needed
+
+    // Inject CSS to force single-page layout
+    await page.addStyleTag({
+      content: `
+        html, body { overflow: hidden !important; }
+        * { box-sizing: border-box !important; }
+      `
+    });
+
+    // Generate PDF with fixed size
+    const pdfBuffer = await page.pdf({
+      width: `${PAGE_WIDTH}px`,
+      height: `${PAGE_HEIGHT}px`,
+      printBackground: true,
+      margin: {
+        top: '0px',
+        right: '0px',
+        bottom: '0px',
+        left: '0px'
+      }
+    });
+
+    // Set response headers
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    res.setHeader('Content-Length', pdfBuffer.length);
+    
+    // Send the PDF buffer
+    res.send(pdfBuffer);
+
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    res.status(500).json({ error: 'Failed to generate PDF' });
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
   }
 });
 

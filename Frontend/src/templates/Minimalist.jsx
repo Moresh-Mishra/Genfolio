@@ -40,7 +40,7 @@ function Minimalist() {
     <>
       <Header />
 
-      <div className="flex flex-col items-center justify-center mt-15 mb-20">
+      <div className="flex flex-col items-center justify-center mt-5 mb-10">
         <div className="w-35 h-35 rounded-full bg-gray-100 border-4 border-blue-300 flex items-center justify-center overflow-hidden mb-2">
           <img
             src={userData.profileImage}
@@ -111,9 +111,9 @@ function Minimalist() {
       </div>
       <div>
         {/* Gray background div */}
-        <div className="flex flex-col bg-[#f9fbfc] min-w-[1000px] items-start mt-10 pb-25 border-1 border-gray-300">
+        <div className="flex flex-col bg-[#f9fbfc] min-w-[1000px] items-start mt-10 pb-10 border-1 border-gray-300">
           {/* About Me Div  */}
-          <div className="flex items-center ml-70 mb-3 mt-25">
+          <div className="flex items-center ml-70 mb-3 mt-15">
             <div className="w-12 h-12 bg-white rounded-lg p-2 border border-gray-300 shadow-sm mr-7 relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <UserIcon className="w-6 h-6 text-gray-500" />

@@ -254,7 +254,7 @@ function Creative() {
           </div>
 
           {/* Start here  */}
-          <div className="flex flex-col rounded-lg text-card-foreground bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden group hover:shadow-purple-500/25 transition-all duration-700 mt-30 w-325 min-h-80 mb-25 p-7 relative">
+          <div className="flex flex-col rounded-lg text-card-foreground bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden group hover:shadow-purple-500/25 transition-all duration-700 mt-15 w-325 min-h-80 mb-10 p-7 relative">
             <div className="ml-5 mt-5 flex flex-row items-center gap-10">
               <div className="relative group">
                 {/* Small Lightning Icon */}
@@ -282,14 +282,14 @@ function Creative() {
             </p>
           </div>
         </div>
-        <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-sky-400 text-center w-full mb-16 mt-10">
+        <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-sky-400 text-center w-full mb-16 mt-3">
           Creative Skills
         </h1>
         <div className="grid grid-cols-4 gap-x-82 gap-y-8 justify-items-center max-w-6xl mx-auto px-12">
           {userData.skills && userData.skills.split(',').map((skill, index) => (
             <div key={index} className="group bg-gradient-to-r from-pink-400 to-purple-500 rounded-2xl shadow-2xl w-[280px] h-[100px] flex items-center transition-transform duration-500 hover:-rotate-6">
-              <div className="group/button bg-pink-200/30 rounded-full px-8 py-4 mx-auto transition-all duration-500 hover:bg-blue-500 group-hover:rotate-0 hover:rotate-0">
-                <span className="text-white font-bold text-xl transition-colors duration-300">
+              <div className="group/button bg-pink-200/30 rounded-full px-4 py-4 mx-auto transition-all duration-500 hover:bg-blue-500 group-hover:rotate-0 hover:rotate-0">
+                <span className="text-white font-bold text-lg transition-colors duration-300">
                   {skill.trim()}
                 </span>
               </div>
@@ -298,7 +298,7 @@ function Creative() {
         </div>
 
         {/* --------------------------------------------------- */}
-        <div className="flex flex-row gap-4 mt-30">
+        <div className="flex flex-row gap-4 mt-10 w-full justify-center">
           <div
             className="group flex flex-col rounded-2xl text-card-foreground bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl overflow-hidden transition-all duration-500 w-230 ml-10 min-h-101 mb-10 p-3 relative
               hover:scale-105 hover:shadow-[0_8px_40px_0_rgba(255,200,40,0.25)] hover:border-yellow-300/60

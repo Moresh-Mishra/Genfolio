@@ -10,21 +10,37 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function Developer() {
-  const [user, setUser] = useState({});
 
-  useEffect(() => {
-    fetch("http://localhost:5000/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
+    const location = useLocation();
+    const [user, setUser] = useState(location.state || {});
+  
+    useEffect(() => {
+      const fetchUserData = async () => {
+        if (!location.state || Object.keys(location.state).length === 0) {
+          try {
+            const response = await fetch("https://localhost:5000/user");
+            const data = await response.json();
+            if (data && Object.keys(data).length > 0) {
+              setUser(data);
+              console.log("Fetching Done");
+            }
+          } catch (error) {
+            console.error("Error fetching user Data: ", error);
+          }
+        }
+      };
+  
+      fetchUserData();
+    }, [location.state]);
 
   return (
     <>
       <Header />
-      <div className="flex justify-center bg-slate-900 px-4 py-12 min-h-screen">
-        <div className="flex flex-col items-start space-y-8">
+      <div className="flex justify-center bg-slate-900 px-4 py-6 min-h-fit">
+        <div className="flex flex-col items-start space-y-4">
           {/* Main Card */}
           <div className="flex items-center w-[840px] h-[274px] rounded-xl shadow-lg border border-emerald-300 animate-glow p-6 gap-6">
             <div className="w-36 h-36 rounded-full bg-gray-100 border-4 border-blue-300 p-1 overflow-hidden">
@@ -74,7 +90,7 @@ function Developer() {
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap gap-10">
             {[
               {
                 Icon: EnvelopeIcon,
@@ -90,11 +106,13 @@ function Developer() {
             ].map(({ Icon, label, value }) => (
               <div
                 key={label}
-                className="flex items-center border border-emerald-300 rounded-lg px-4 py-2 shadow-lg bg-slate-800 space-x-2 max-w-[300px]"
+                className="flex border border-emerald-300 rounded-lg px-4 py-2 shadow-lg bg-slate-800 w-[253px]"
               >
-                <Icon className="w-8 h-8 text-emerald-500" />
-                <div className="flex flex-col items-baseline gap-0.5 mb-2">
-                  <h1 className="text-white text-lg">{label}</h1>
+                <div className="flex flex-col gap-0.5 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-8 h-8 text-emerald-500" />
+                    <h1 className="text-white text-lg">{label}</h1>
+                  </div>
                   <h1 className="text-white">{value}</h1>
                 </div>
               </div>
