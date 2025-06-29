@@ -1,14 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-
-// Load environment variables
-require('dotenv').config({ path: path.join(__dirname, '.env') });
-
-// Debug: Check if environment variables are loaded
-console.log('Environment check:');
-console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY);
-console.log('GROQ_API_KEY length:', process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.length : 0);
+require('dotenv').config();
 
 const app = express();
 
@@ -32,20 +24,14 @@ app.post('/generate-about', async (req, res) => {
     return res.status(400).json({ error: 'Input is required' });
   }
   
-  // Check if API key is configured
-  if (!process.env.GROQ_API_KEY) {
-    console.error('GROQ_API_KEY is not set in environment variables');
-    return res.status(500).json({ error: 'API key not configured. Please set GROQ_API_KEY in your .env file.' });
-  }
-  
   // Simple length-based token determination
   const inputLength = input.length;
-  let maxTokens = 120; // Default for medium length
+  let maxTokens = 200; // Default for medium length - increased for better completion
   
   if (inputLength < 50) {
-    maxTokens = 80; // Short
+    maxTokens = 150; // Short - increased for better completion
   } else if (inputLength > 150) {
-    maxTokens = 150; // Long
+    maxTokens = 250; // Long - increased for better completion
   }
   
   try {
@@ -60,11 +46,11 @@ app.post('/generate-about', async (req, res) => {
         messages: [
           { 
             role: "system", 
-            content: "Write a natural About Me section without any prefixes or summaries. Start directly with the content." 
+            content: "Write a natural About Me section using ALL the information provided in the user input. Include every detail, field, or piece of information mentioned by the user - whether it's name, hobbies, education, location, work experience, skills, projects, or any other personal information. Do not ignore or skip any details mentioned in the input. Start directly with the content - do not use phrases like 'here's about me', 'this is about me', or any other introductory text. Always complete your sentences with proper punctuation." 
           },
           { 
             role: "user", 
-            content: `Create an About Me section based on: ${input}` 
+            content: `Create an About Me section based ONLY on this information: ${input}. Use only the details provided here and do not add any additional information. Make sure to finish each sentence completely.` 
           }
         ],
         max_tokens: maxTokens,
@@ -73,17 +59,22 @@ app.post('/generate-about', async (req, res) => {
     });
     
     if (!groqResponse.ok) {
-      const errorText = await groqResponse.text();
-      console.error('Groq API error response:', errorText);
-      throw new Error(`Groq API error: ${groqResponse.status} - ${errorText}`);
+      throw new Error(`Groq API error: ${groqResponse.status}`);
     }
     
     const data = await groqResponse.json();
-    const output = data.choices[0].message.content;
+    let output = data.choices[0].message.content;
+    
+    // Ensure the output ends with a period for completeness
+    output = output.trim();
+    if (!output.endsWith('.')) {
+      output += '.';
+    }
+    
     res.json({ output });
   } catch (error) {
     console.error('Error calling Groq API:', error);
-    res.status(500).json({ error: 'Failed to generate About Me. Please check your API key and try again.' });
+    res.status(500).json({ error: 'Failed to generate About Me' });
   }
 });
 
