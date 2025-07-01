@@ -11,6 +11,8 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const handleStartForFree = () => navigate('/form');
+  const handleHistory = () => navigate('/history');
+  const handleLogin = () => navigate('/login');
 
   return (
     <div>
@@ -24,11 +26,11 @@ const Landing = () => {
             </div>
             {/* Right group: History and Login */}
             <div className="flex flex-row items-center gap-3">
-              <button className="flex items-center gap-1 border border-blue-100 px-3 py-1.5 rounded-lg cursor-pointer bg-white/90 hover:bg-blue-50 transition-all duration-200 font-medium">
+              <button className="flex items-center gap-1 border border-blue-100 px-3 py-1.5 rounded-lg cursor-pointer bg-white/90 hover:bg-blue-50 transition-all duration-200 font-medium" onClick={handleHistory}>
                 <ArrowPathIcon className="w-6 h-6 text-blue-500" />
                 History
               </button>
-              <button className="flex items-center gap-1 border border-blue-200 px-3 py-1.5 rounded-lg cursor-pointer text-white bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 font-semibold">
+              <button className="flex items-center gap-1 border border-blue-200 px-3 py-1.5 rounded-lg cursor-pointer text-white bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 font-semibold" onClick={handleLogin}>
                 <ArrowRightEndOnRectangleIcon className="w-7 h-6 text-white" />
                 Login
               </button>
