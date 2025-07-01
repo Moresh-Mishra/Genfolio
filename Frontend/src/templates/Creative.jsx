@@ -282,7 +282,7 @@ function Creative() {
             </p>
           </div>
         </div>
-        <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-sky-400 text-center w-full mb-16 mt-3">
+        <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-sky-400 text-center w-full mb-16 mt-5">
           Creative Skills
         </h1>
         <div className="grid grid-cols-4 gap-x-82 gap-y-8 justify-items-center max-w-6xl mx-auto px-12">

@@ -37,7 +37,7 @@ export default function Corporate() {
   return (
     <>
       <Header />
-      <div>
+      <div className="mb-5">
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}
           <div className="flex items-center text-white">
