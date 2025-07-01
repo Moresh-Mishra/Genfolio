@@ -5,6 +5,7 @@ import user5 from '../assets/user5.png';
 function History() {
   const navigate = useNavigate();
   const home = () => navigate('/');
+  const userform = () => navigate('/form');
   return (
     <div>
       <div className="flex flex-row items-center gap-3 h-15 border-1 border-gray-300">
@@ -19,13 +20,20 @@ function History() {
         </div>
       </div>
 
-      <div className="ml-20 mt-10  font-bold">
-        <h1 className=" text-4xl p-2">Your Portfolio History</h1>
-        <h3 className=" text-gray-4 p-2 text-xl">View and manage all the Portfolios you have created</h3>
+      <div className="ml-20 mt-10">
+        <h1 className=" text-4xl p-2 font-semibold">Your Portfolio History</h1>
+        <h3 className=" text-gray-4 p-2 text-xl text-gray-600">View and manage all the Portfolios you have created</h3>
       </div>
-      <div className="flex flex-col items-center  mt-10 bg-blue-200 p-4 w-[860px] h-[337px] ml-80 rounded-2xl">
+      <div className="flex flex-col items-center  mt-10 border-1 border-gray-500 shadow-2xl p-4 w-[1360px] h-auto ml-23 rounded-2xl">
         <img src={user5} alt="" className=" bg-blue-400  rounded-full w-20 h-20 p-2 mt-4" />
         <h1 className=" font-bold text-2xl">No portfolios Yet</h1>
+        <h1 className="text-gray-600 mt-4 text-md text-center">You haven't created any portfolios yet. Start building your first one!</h1>
+      </div>
+      <div className="ml-25 mt-15">
+        <button onClick={userform} className="flex flex-row border-1 p-5 rounded-lg bg-blue-500 cursor-pointer hover:bg-blue-700">
+        <img src={user5} alt="" className="w-7"/>
+          <h1 className="text-lg text-white">Create New Portfolio</h1>
+          </button>
       </div>
     </div>
   );
