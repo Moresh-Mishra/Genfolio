@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import user5 from "../assets/user5.png";
+import user6 from "../assets/user6.png";
 import pen from "../assets/pen.png";
 import download from "../assets/download.png";
 import CustomerReviews from "./CustomerReviews.jsx";
@@ -14,6 +15,10 @@ const Landing = () => {
     <div>
       <div className="barba-wrapper">
         <div className="barba-container" data-barba="container" data-barba-namespace="landing">
+          <div className="flex flex-row gap-2 p-5">
+            <img src={user5} alt="" className="bg-blue-500 w-7 outline-blue-500" />
+            <h1>hello</h1>
+          </div>
           <div className="bg-gradient-to-bl from-pink-100 to-blue-100 min-h-[155px] p-4 sm:p-6">
             <div className="flex flex-col items-center pt-8 sm:pt-16">
               <img
