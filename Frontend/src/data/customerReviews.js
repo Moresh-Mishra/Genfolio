@@ -70,5 +70,50 @@ export const customerReviews = [
     rating: 5,
     review: "Deployment options and CI/CD integration are excellent. Interactive diagrams showcase my infrastructure projects perfectly.",
     company: "Cloud Solutions Inc."
+  },
+  {
+    id: 9,
+    name: "Aisha Verma",
+    role: "AI Researcher",
+    image: "user5",
+    rating: 5,
+    review: "The AI-powered portfolio generator is a game changer! I created a stunning portfolio in minutes and loved the smart suggestions.",
+    company: "DeepVision Labs"
+  },
+  {
+    id: 10,
+    name: "Carlos Mendes",
+    role: "Freelance Designer",
+    image: "user6",
+    rating: 5,
+    review: "Instant download and easy sharing made it so simple to send my portfolio to clients. The templates are truly professional.",
+    company: "Self-Employed"
+  },
+  {
+    id: 11,
+    name: "Emily Nguyen",
+    role: "Software Engineer",
+    image: "user1",
+    rating: 5,
+    review: "I love the portfolio history feature! I can revisit and update my old portfolios anytime. Super useful for tracking my growth.",
+    company: "NextGen Apps"
+  },
+  {
+    id: 12,
+    name: "Ravi Singh",
+    role: "Startup Founder",
+    image: "user2",
+    rating: 5,
+    review: "Customizing my portfolio was effortless. The color and font options helped me match my brand perfectly.",
+    company: "InnovateX"
+  },
+  {
+    id: 13,
+    name: "Julia Brown",
+    role: "Marketing Analyst",
+    image: "user3",
+    rating: 5,
+    review: "The AI suggestions for project highlights made my portfolio stand out. Recruiters commented on the clarity and design!",
+    company: "MarketMinds"
   }
 ]; 

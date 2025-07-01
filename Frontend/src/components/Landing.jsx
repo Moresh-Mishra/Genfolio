@@ -5,6 +5,7 @@ import user6 from "../assets/user6.png";
 import pen from "../assets/pen.png";
 import download from "../assets/download.png";
 import CustomerReviews from "./CustomerReviews.jsx";
+import { ClockIcon, ArrowRightEndOnRectangleIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -15,9 +16,23 @@ const Landing = () => {
     <div>
       <div className="barba-wrapper">
         <div className="barba-container" data-barba="container" data-barba-namespace="landing">
-          <div className="flex flex-row gap-2 p-5">
-            <img src={user5} alt="" className="bg-blue-500 w-7 outline-blue-500" />
-            <h1>hello</h1>
+          <div className="flex flex-row justify-between items-center px-5 py-2 bg-white/80 shadow-sm border-b border-blue-100 rounded-xl">
+            {/* Left group: user icon, Genfolio */}
+            <div className="flex flex-row items-center gap-3">
+              <img src={user6} alt="" className="w-11 h-11 rounded-full transition-transform duration-200 hover:scale-105" />
+              <h1 className="text-2xl font-bold text-blue-800 tracking-tight transition-colors duration-200 hover:text-blue-600 cursor-pointer">Genfolio</h1>
+            </div>
+            {/* Right group: History and Login */}
+            <div className="flex flex-row items-center gap-3">
+              <button className="flex items-center gap-1 border border-blue-100 px-3 py-1.5 rounded-lg cursor-pointer bg-white/90 hover:bg-blue-50 transition-all duration-200 font-medium">
+                <ArrowPathIcon className="w-6 h-6 text-blue-500" />
+                History
+              </button>
+              <button className="flex items-center gap-1 border border-blue-200 px-3 py-1.5 rounded-lg cursor-pointer text-white bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 font-semibold">
+                <ArrowRightEndOnRectangleIcon className="w-7 h-6 text-white" />
+                Login
+              </button>
+            </div>
           </div>
           <div className="bg-gradient-to-bl from-pink-100 to-blue-100 min-h-[155px] p-4 sm:p-6">
             <div className="flex flex-col items-center pt-8 sm:pt-16">
@@ -28,7 +43,7 @@ const Landing = () => {
               />
 
               <h1 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-6 text-gray-800">
-                Portfolio Generator
+                Genfolio
               </h1>
 
               <p className="text-center text-lg sm:text-2xl text-gray-700 px-2 sm:px-4 max-w-2xl leading-relaxed mb-6 sm:mb-10">
@@ -145,8 +160,13 @@ const Landing = () => {
                 <br />
                 Get your portfolio as a high-quality PDF ready for applications and sharing.
               </li>
+              <li>
+                <span className="font-bold">Portfolio History (for Logged-in Users)</span>
+                <br />
+                Access the history of all portfolios you've created—view, edit, or download them anytime from your account.
+              </li>
             </ul>
-            <div className="w-full sm:w-155 h-40 sm:h-75 border-2 bg-gradient-to-br from-blue-600 to-purple-500 mt-4 sm:mt-1 border-gray-300 rounded-lg flex items-center justify-center shadow-md">
+            <div className="w-250 h-99 mr-5 border-2 bg-gradient-to-br from-blue-600 to-purple-500 mt-4 sm:mt-1 border-gray-300 rounded-lg flex items-center justify-center shadow-md mx-auto">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sparkles h-20 w-20 text-white animate-pulse">
                 <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
                 <path d="M20 3v4"></path>
