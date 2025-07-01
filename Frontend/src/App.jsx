@@ -7,6 +7,7 @@ import Minimalist from './templates/Minimalist';
 import Creative from './templates/Creative';
 import Corporate from './templates/Corporate';
 import Developer from './templates/Developer';
+import Login from './auth/Login';
 
 
 const App = () => (
@@ -21,7 +22,8 @@ const App = () => (
         <Route path="/creative" element={<Creative />} />
         <Route path='/corporate' element={<Corporate />} />
         <Route path='/developer' element={<Developer />} />
-        
+        <Route path='/login' element={<Login />} />
+
         {/* Dynamic portfolio routes with UUID */}
         <Route path="/minimalist/:portfolioId" element={<Minimalist />} />
         <Route path="/creative/:portfolioId" element={<Creative />} />
