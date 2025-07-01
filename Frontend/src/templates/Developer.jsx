@@ -17,7 +17,6 @@ function Developer() {
     const location = useLocation();
     const { portfolioId } = useParams(); // Get portfolio ID from URL
     const [user, setUser] = useState(location.state || {});
-    const pdfRef = useRef();
   
     useEffect(() => {
       const fetchUserData = async () => {
@@ -56,8 +55,8 @@ function Developer() {
 
   return (
     <>
-      <Header pdfRef={pdfRef} fileName={`${user.fullName || 'Portfolio'}-Developer.pdf`} />
-      <div ref={pdfRef} className="flex justify-center bg-slate-900 px-4 py-6 min-h-fit">
+      <Header />
+      <div className="flex justify-center bg-slate-900 px-4 py-6 min-h-fit">
         <div className="flex flex-col items-start space-y-4">
           {/* Main Card */}
           <div className="flex items-center w-[840px] h-[274px] rounded-xl shadow-lg border border-emerald-300 animate-glow p-6 gap-6">

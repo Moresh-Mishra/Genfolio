@@ -15,7 +15,6 @@ import { useLocation } from "react-router-dom";
 function Creative() {
   const location = useLocation();
   const [userData, setUserData] = useState(location.state || {});
-  const pdfRef = useRef();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -38,8 +37,8 @@ function Creative() {
 
   return (
     <>
-      <Header pdfRef={pdfRef} fileName={`${userData.fullName || 'Portfolio'}-Creative.pdf`} />
-      <div ref={pdfRef} className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#5a2496] via-[#1e267c] to-[#1a3a8c]">
+      <Header />
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#5a2496] via-[#1e267c] to-[#1a3a8c]">
         {/* Blurred gradient spots for background depth */}
         <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-800 rounded-full opacity-40 blur-3xl pointer-events-none"></div>
         <div className="absolute top-[10%] right-[-10%] w-[350px] h-[350px] bg-blue-900 rounded-full opacity-30 blur-3xl pointer-events-none"></div>

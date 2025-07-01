@@ -34,11 +34,10 @@ export default function Corporate() {
     fetchUserData();
   }, [location.state]);
 
-   const pdfRef = useRef(null);
   return (
     <>
-      <Header pdfRef={pdfRef} fileName={`${user.fullName || 'Portfolio'}-Corporate.pdf`}/>
-      <div ref={pdfRef}>
+      <Header />
+      <div>
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}
           <div className="flex items-center text-white">
