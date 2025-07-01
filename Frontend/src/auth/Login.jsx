@@ -1,133 +1,77 @@
-
 import { useState } from "react";
-export default function Login(){
-     const [showSignUp, setShowSignUp] = useState(false);
 
-  /* --- Tailwind utility strings that mimic the original CSS selectors ---- */
-   const container =
-    `relative overflow-hidden w-[768px] max-w-full min-h-[480px] bg-white
-     rounded-[30px] shadow-[0_5px_15px_rgba(0,0,0,0.35)]
-     transition-all duration-700 ease-in-out
-     ${showSignUp ? "active" : ""}`;
+export default function Login() {
+  const [showSignUp, setShowSignUp] = useState(false);
 
-  const signIn =
-    `absolute inset-y-0 left-0 flex w-1/2 flex-col items-center justify-center
-     px-10 transition-transform duration-700 z-[2]
-     ${showSignUp ? "translate-x-full" : ""}`;
+  // Classes
+  const containerClass = "w-[950px] h-[500px] bg-white/90 rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex relative transition-all duration-700";
+  const panelClass = "flex flex-col items-center justify-center h-full px-8 text-center w-1/2";
+  const btnOutline = "border border-white text-white text-sm font-semibold py-2 px-12 rounded-lg uppercase tracking-wider hover:bg-white hover:text-blue-700 transition-all duration-200 mt-6";
 
-  const signUp =
-    `absolute inset-y-0 left-0 flex w-1/2 flex-col items-center justify-center
-     px-10 opacity-0 transition-all duration-700
-     ${showSignUp ? "translate-x-full opacity-100 z-[5]" : "z-[1]"}`;
+  // Overlay animation logic
+  const overlayClass = `absolute top-0 left-0 w-1/2 h-full transition-all duration-700 z-20
+    ${showSignUp ? 'translate-x-full' : 'translate-x-0'}
+    bg-gradient-to-r from-blue-600 to-purple-500 text-white flex items-center justify-center`;
 
-  const toggleWrap =
-    `absolute top-0 left-1/2 h-full w-1/2 overflow-hidden
-     transition-all duration-700 ease-in-out rounded-[150px_0_0_100px] z-[1000]
-     ${showSignUp ? "-translate-x-full rounded-[0_150px_100px_0]" : ""}`;
-
-  const toggle =
-    `absolute -left-full flex h-full w-[200%] items-center justify-center
-     bg-gradient-to-r from-[#5c6bc0] to-[#512da8] text-white
-     transition-transform duration-700 ease-in-out
-     ${showSignUp ? "translate-x-1/2" : ""}`;
-
-  const panelBase =
-    "flex h-full w-1/2 flex-col items-center justify-center px-8 text-center";
-
-  /* shorthand utility groups */
-  const inputClasses =
-    "bg-gray-200 outline-none text-sm py-2 px-4 rounded-lg w-full my-2";
-
-  const btnPrimary =
-    "bg-[#512da8] text-white text-xs font-semibold py-2 px-12 rounded-lg uppercase tracking-wider";
-
-  const btnOutline =
-    "border border-white text-white text-xs font-semibold py-2 px-12 rounded-lg uppercase tracking-wider";
-
-    
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#e2e2e2] to-[#c9d6ff] font-[Montserrat]">
-      <div className={container}>
-        {/* ----------------------- Sign‑Up form --------------------------- */}
-        <div className={signUp}>
-          <h1 className="text-3xl font-bold">Create Account</h1>
-
-          <div className="my-5 flex space-x-2">
-            {["google-plus-g", "facebook-f", "github", "linkedin-in"].map(i => (
-              <a
-                key={i}
-                href="#/"
-                className="border border-[#ccc] rounded-[20%] inline-flex h-10 w-10 items-center justify-center"
-              >
-                <i className={`fa-brands fa-${i}`}></i>
-              </a>
-            ))}
-          </div>
-
-          <span className="text-xs">or use your email for registration</span>
-
-          <input type="text" placeholder="Name" className={inputClasses} />
-          <input type="email" placeholder="Email" className={inputClasses} />
-          <input type="password" placeholder="Password" className={inputClasses} />
-
-          <button className={`${btnPrimary} mt-3`}>Sign Up</button>
-        </div>
-
-        {/* ----------------------- Sign‑In form --------------------------- */}
-        <div className={signIn}>
-          <h1 className="text-3xl font-bold">Sign In</h1>
-
-          <div className="my-5 flex space-x-2">
-            {["google-plus-g", "facebook-f", "github", "linkedin-in"].map(i => (
-              <a
-                key={i}
-                href="#/"
-                className="border border-[#ccc] rounded-[20%] inline-flex h-10 w-10 items-center justify-center"
-              >
-                <i className={`fa-brands fa-${i}`}></i>
-              </a>
-            ))}
-          </div>
-
-          <span className="text-xs">or use your email password</span>
-
-          <input type="email" placeholder="Email" className={inputClasses} />
-          <input type="password" placeholder="Password" className={inputClasses} />
-
-          <a href="#/" className="text-xs mt-2">
-            Forgot your password?
-          </a>
-
-          <button className={`${btnPrimary} mt-3`}>Sign In</button>
-        </div>
-
-        {/* --------------------- Toggle overlay panels -------------------- */}
-        <div className={toggleWrap}>
-          <div className={toggle}>
-            {/* Welcome Back (left) */}
-            <div className={`${panelBase} -translate-x-full`}>
-              <h1 className="text-3xl font-bold">Welcome Back!</h1>
-              <p className="my-4 text-sm leading-5">
-                Enter your personal details to use all of site features
-              </p>
-              <button className={btnOutline} onClick={() => setShowSignUp(false)}>
-                Sign In
-              </button>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-bl from-pink-100 to-blue-100 font-[Montserrat]">
+      <div className={containerClass}>
+        {/* Forms container */}
+        <div className="flex w-full h-full relative z-10">
+          {/* Sign In Form */}
+          <div className={panelClass}>
+            <div className="w-full max-w-xs">
+              <h1 className="text-3xl font-bold text-blue-800 mb-4">Sign In</h1>
+              <input type="email" placeholder="Email" className="bg-gray-100 outline-none text-base py-2 px-4 rounded-lg w-full my-2 border border-blue-100 focus:ring-2 focus:ring-blue-300" />
+              <input type="password" placeholder="Password" className="bg-gray-100 outline-none text-base py-2 px-4 rounded-lg w-full my-2 border border-blue-100 focus:ring-2 focus:ring-blue-300" />
+              <button className="bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold py-2 px-12 rounded-lg uppercase tracking-wider shadow-md transition-all duration-200 mt-4 w-full">Sign In</button>
             </div>
-
-            {/* Hello, Friend (right) */}
-            <div className={panelBase}>
-              <h1 className="text-3xl font-bold">Hello, Friend!</h1>
-              <p className="my-4 text-sm leading-5">
-                Register with your personal details to use all of site features
-              </p>
-              <button className={btnOutline} onClick={() => setShowSignUp(true)}>
-                Sign Up
-              </button>
+          </div>
+          {/* Sign Up Form */}
+          <div className={panelClass}>
+            <div className="w-full max-w-xs">
+              <h1 className="text-3xl font-bold text-blue-800 mb-4">Create Account</h1>
+              <input type="text" placeholder="Name" className="bg-gray-100 outline-none text-base py-2 px-4 rounded-lg w-full my-2 border border-blue-100 focus:ring-2 focus:ring-blue-300" />
+              <input type="email" placeholder="Email" className="bg-gray-100 outline-none text-base py-2 px-4 rounded-lg w-full my-2 border border-blue-100 focus:ring-2 focus:ring-blue-300" />
+              <input type="password" placeholder="Password" className="bg-gray-100 outline-none text-base py-2 px-4 rounded-lg w-full my-2 border border-blue-100 focus:ring-2 focus:ring-blue-300" />
+              <button className="bg-purple-700 hover:bg-purple-800 text-white text-sm font-semibold py-2 px-12 rounded-lg uppercase tracking-wider shadow-md transition-all duration-200 mt-4 w-full">Sign Up</button>
             </div>
+          </div>
+        </div>
+        {/* Overlay Panel */}
+        <div className={overlayClass} style={{ borderRadius: showSignUp ? "0 150px 100px 0" : "150px 0 0 100px" }}>
+          <div className="flex flex-col items-center justify-center h-full px-8 text-center w-full">
+            {showSignUp ? (
+              <>
+                <h1 className="text-3xl font-bold mb-2">Join Us Today!</h1>
+                <p className="my-4 text-sm leading-5">
+                  Enter your details and start your journey with us.
+                </p>
+                <button className={btnOutline} onClick={() => setShowSignUp(false)}>
+                  Sign In
+                </button>
+              </>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold mb-2">Welcome Back!</h1>
+                <p className="my-4 text-sm leading-5">
+                  To keep connected with us, please log in with your personal info.
+                </p>
+                <button className={btnOutline} onClick={() => setShowSignUp(true)}>
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
+      {/* Responsive styles */}
+      <style>{`
+        @media (max-width: 600px) {
+          .w-[950px], .h-[500px] { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; }
+          .max-w-xs { max-width: 90vw !important; }
+        }
+      `}</style>
     </div>
   );
 }
