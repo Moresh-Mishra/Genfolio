@@ -37,7 +37,7 @@ export default function Corporate() {
    const pdfRef = useRef(null);
   return (
     <>
-      <Header pdfRef={pdfRef}  fileName="Myportfolio.pdf"/>
+      <Header pdfRef={pdfRef} fileName={`${user.fullName || 'Portfolio'}-Corporate.pdf`}/>
       <div ref={pdfRef}>
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}
