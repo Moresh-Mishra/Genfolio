@@ -1,5 +1,6 @@
 import {ArrowLeftIcon, CalendarIcon} from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import user5 from '../assets/user5.png';
 
 function History() {
   const navigate = useNavigate();
@@ -18,8 +19,13 @@ function History() {
         </div>
       </div>
 
-      <div className="ml-20 mt-10 text-4xl font-bold">
-        <h1>Your Portfolio History</h1>
+      <div className="ml-20 mt-10  font-bold">
+        <h1 className=" text-4xl p-2">Your Portfolio History</h1>
+        <h3 className=" text-gray-4 p-2 text-xl">View and manage all the Portfolios you have created</h3>
+      </div>
+      <div className="flex flex-col items-center  mt-10 bg-blue-200 p-4 w-[860px] h-[337px] ml-80 rounded-2xl">
+        <img src={user5} alt="" className=" bg-blue-400  rounded-full w-20 h-20 p-2 mt-4" />
+        <h1 className=" font-bold text-2xl">No portfolios Yet</h1>
       </div>
     </div>
   );
