@@ -51,7 +51,7 @@ function Header({pdfRef, fileName}) {
   };
 
   return (
-    <div className="flex flex-row bg-white p-5 border-1 border-gray-300">
+    <div className="header flex flex-row bg-white p-5 border-1 border-gray-300">
       <div className="flex items-center justify-between w-full">
         {/* Back to Home - Left side */}
         <button onClick={home} className="flex cursor-pointer items-center gap-2 ml-10">
@@ -63,7 +63,19 @@ function Header({pdfRef, fileName}) {
         <div className="flex items-center gap-3 mr-10">
           {/* Download PDF Button */}
           <button 
-            onClick={() => window.print()}
+            onClick={() => {
+              alert(
+                'Recommended Print Settings:\n' +
+                '- Destination: Save as PDF\n' +
+                '- Layout: Landscape\n' +
+                '- Paper size: A5\n' +
+                '- Margins: None\n' +
+                '- Scale: Custom, 49\n' +
+                '- Background graphics: Checked\n' +
+                '\nFor best results, please apply these settings in the print dialog.'
+              );
+              window.print();
+            }}
             className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
           >
             <ArrowDownTrayIcon className="w-5 h-5" />
