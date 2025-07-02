@@ -1,12 +1,29 @@
 const express = require('express');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 
 app.use(express.json({ limit: '50mb' }));
 app.use(cors());
+
+mongoose.connect('mongodb://localhost:27017/Genfolio');
+const db=mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', ()=>{
+  console.log("Connected to MongoDB");
+});
+
+const userSchema=new mongoose.Schema({
+  username: {type: String, required: true, unique: true},
+  email: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
+  createdAt: {type: Date, default: Date.now}
+});
+const User= mongoose.model('User', userSchema)
 
 // Store portfolios with UUID keys
 let portfolios = {};
@@ -103,6 +120,45 @@ app.post('/generate-about', async (req, res) => {
   } catch (error) {
     console.error('Error calling Groq API:', error);
     res.status(500).json({ error: 'Failed to generate About Me' });
+  }
+});
+
+app.post('/register', async (req, res)=>{
+  const {username, email, password} = req.body;
+  const saltRounds=10;
+  try{
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+    await user.save();
+    res.status(201).json({ message: 'User registered!' });
+  }catch(error){
+    console.log(error);
+    res.status(500).json({error: 'Registration failed'});
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      console.log("Login successful");
+      res.json({ message: 'Login successful' });
+    } else {
+      console.log("Login failed");
+      res.status(401).json({ error: 'Invalid email or password' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
