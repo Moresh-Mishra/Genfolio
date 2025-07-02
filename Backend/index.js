@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
@@ -8,48 +9,50 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(cors());
 
-// Store portfolios with UUID keys
-let portfolios = {};
+mongoose.connect('mongodb://localhost:27017/genfolio');
 
-app.post('/user', (req, res) => {
-  const portfolioId = uuidv4();
-  portfolios[portfolioId] = req.body;
-  res.json({ success: true, portfolioId });
-});
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  passwordHash: { type: String, required: true },
+}, { collection: 'user' });
 
-app.get('/user', (req, res) => {
-  // For backward compatibility, return the first portfolio or empty object
-  const firstPortfolioId = Object.keys(portfolios)[0];
-  res.json(firstPortfolioId ? portfolios[firstPortfolioId] : {});
-});
+const profileSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  fullName: String,
+  title: String,
+  email: String,
+  phone: String,
+  location: String,
+  aboutMe: String,
+  workExperience: String,
+  education: String,
+  projects: String,
+  resume: String,
+  github: String,
+  linkedin: String,
+  twitter: String,
+  skills: String,
+  profileImage: String,
+  submittedAt: {
+    type: Date,
+    default: Date.now,
+    get: function(value) {
+      if (!value) return value;
+      // Convert UTC to IST (UTC+5:30)
+      const istOffset = 5.5 * 60 * 60 * 1000;
+      return new Date(value.getTime() + istOffset);
+    }
+  },
+}, { collection: 'userdata', versionKey: false, toJSON: { getters: true }, toObject: { getters: true } });
 
-// New endpoint to get portfolio by ID
-app.get('/portfolio/:id', (req, res) => {
-  const { id } = req.params;
-  const portfolio = portfolios[id];
-  
-  if (!portfolio) {
-    return res.status(404).json({ error: 'Portfolio not found' });
-  }
-  
-  res.json(portfolio);
-});
-
-// New endpoint to get all portfolios (for admin purposes)
-app.get('/portfolios', (req, res) => {
-  const portfolioList = Object.keys(portfolios).map(id => ({
-    id,
-    name: portfolios[id].fullName || 'Unnamed Portfolio',
-    title: portfolios[id].title || '',
-    createdAt: new Date().toISOString()
-  }));
-  res.json(portfolioList);
-});
+const User = mongoose.model('User', userSchema);
+const Profile = mongoose.model('Profile', profileSchema);
 
 app.post('/generate-about', async (req, res) => {
   const { input } = req.body;
   if (!input) {
     return res.status(400).json({ error: 'Input is required' });
+    // routing to Landing.jsx
   }
   
   // Simple length-based token determination
@@ -103,6 +106,22 @@ app.post('/generate-about', async (req, res) => {
   } catch (error) {
     console.error('Error calling Groq API:', error);
     res.status(500).json({ error: 'Failed to generate About Me' });
+  }
+});
+
+app.post('/api/profile', async (req, res) => {
+  try {
+    const profileData = req.body;
+    if (!profileData.userId) {
+      return res.status(400).json({ error: 'userId is required' });
+
+    }
+    const profile = new Profile(profileData);
+    await profile.save();
+    res.json({ success: true, profile });
+  } catch (error) {
+    console.error('Error saving profile:', error);
+    res.status(500).json({ error: 'Failed to save profile' });
   }
 });
 
