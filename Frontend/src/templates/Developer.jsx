@@ -152,7 +152,7 @@ function Developer() {
               <h1 className="text-emerald-500 text-2xl font-bold">Skills</h1>
             </div>
             {/* border border-emerald-500 text-white text-lg px-2 py-2 rounded-md w-[225px] flex justify-between items-center */}
-            <div className="p-5">
+            <div className="p-5 w-770">
               {user.skills ? (
                 <ul className="grid grid-cols-4 gap-4 list-disc list-inside">
                   {user.skills.split(",").map((skill, index) => (
@@ -178,7 +178,7 @@ function Developer() {
                 Experience
               </h1>
             </div>
-            <div className="flex flex-col space-y-2 border-1 border-emerald-500 p-4">
+            <div className="flex flex-col space-y-2 border-1 border-emerald-500 p-4 w-201">
               <h2 className="text-emerald-500">Professional journey</h2>
               <p className="text-gray-300">{user.workExperience}</p>
             </div>
