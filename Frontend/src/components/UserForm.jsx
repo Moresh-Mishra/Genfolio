@@ -147,33 +147,26 @@ export default function UserForm() {
       setLoading(false);
     }
   };
-
+                // STORE DATA
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data being stored:', formData);
-    
     try {
-      const response = await fetch("http://localhost:5000/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+
+      const userId = localStorage.getItem('userId') || 'demoUserId';
+      const response = await fetch('http://localhost:5000/api/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, userId }),
       });
-      
       const data = await response.json();
-      
-      if (data.success && data.portfolioId) {
-        // Store the portfolio ID in localStorage for later use
-        localStorage.setItem('currentPortfolioId', data.portfolioId);
-        // Navigate to style selection with portfolio data and ID
-        navigate("/style", { 
-          state: { 
-            ...formData, 
-            portfolioId: data.portfolioId 
-          } 
-        });
+      if (data.success && data.profile) {
+        // Store profile ID or handle navigation as needed
+        localStorage.setItem('currentProfileId', data.profile._id);
+        navigate('/style', { state: { ...formData, profileId: data.profile._id } });
       } else {
-        throw new Error('Failed to create portfolio');
+        throw new Error('Failed to create profile');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
