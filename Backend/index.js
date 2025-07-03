@@ -5,10 +5,26 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const session = require('express-session');
 
 const app = express();
 app.use(express.json({ limit: '50mb' }));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // must match your frontend
+  credentials: true
+}));
+app.use(session({
+  secret: 'your-secret-key', // use a strong secret in production!
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // false for HTTP, true for HTTPS
+}));
+
+app.use((req, res, next) => {
+  console.log('Cookies:', req.headers.cookie);
+  console.log('Session:', req.session);
+  next();
+});
 
 // --- MongoDB/Mongoose setup ---
 mongoose.connect('mongodb://localhost:27017/Genfolio');
@@ -146,18 +162,43 @@ app.post('/generate-about', async (req, res) => {
 });
 
 // --- Profile save endpoint (MongoDB) ---
+// Save or update the profile for the logged-in user
 app.post('/api/profile', async (req, res) => {
   try {
-    const profileData = req.body;
-    if (!profileData.userId) {
-      return res.status(400).json({ error: 'userId is required' });
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({ error: 'Not logged in' });
     }
-    const profile = new Profile(profileData);
-    await profile.save();
+    const userId = req.session.user.id;
+    const profileData = { ...req.body, userId };
+    // Upsert: update if exists, otherwise create
+    const profile = await Profile.findOneAndUpdate(
+      { userId },
+      profileData,
+      { new: true, upsert: true }
+    );
     res.json({ success: true, profile });
   } catch (error) {
     console.error('Error saving profile:', error);
     res.status(500).json({ error: 'Failed to save profile' });
+  }
+});
+
+// --- Profile fetch endpoint (MongoDB) ---
+// Get the profile for the logged-in user
+app.get('/api/profile', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({ error: 'Not logged in' });
+    }
+    const userId = req.session.user.id;
+    const profile = await Profile.findOne({ userId });
+    if (!profile) {
+      return res.status(404).json({ error: 'Profile not found' });
+    }
+    res.json({ success: true, profile });
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ error: 'Failed to fetch profile' });
   }
 });
 
@@ -190,16 +231,33 @@ app.post('/login', async (req, res) => {
     }
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      console.log('Login successful');
-      res.json({ message: 'Login successful' });
+      req.session.user = { id: user._id, username: user.username, email: user.email };
+      res.json({ message: 'Login successful', username: user.username });
     } else {
-      console.log('Login failed');
       res.status(401).json({ error: 'Invalid email or password' });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// --- Get Username endpoint ---
+app.get('/api/get-username', (req, res) => {
+  if (req.session && req.session.user) {
+    return res.json({ username: req.session.user.username });
+  }
+  res.status(401).json({ error: 'Not logged in' });
+});
+
+// --- Logout endpoint ---
+app.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logged out successfully' });
+  });
 });
 
 // --- Root endpoint ---

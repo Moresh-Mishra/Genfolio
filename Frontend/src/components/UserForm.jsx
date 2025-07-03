@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PhoneInput from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
 import { useNavigate } from "react-router-dom";
@@ -14,16 +14,16 @@ import {
 
 export default function UserForm() {
   const navigate = useNavigate();
-  const [expandedSections, setExpandedSections] = useState({
-    basic: false,
-    about: false,
-    professional: false,
-    projects: false,
-  });
-
-  // Unified form state
-  const [formData, setFormData] = useState({
-    profileImage: null, // base64 string
+  // Alert and previous profile
+  const [showAlert, setShowAlert] = useState(false);
+  const [previousProfile, setPreviousProfile] = useState(null);
+  // Loading and AI generation
+  const [loading, setLoading] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(false);
+  const [originalInput, setOriginalInput] = useState("");
+  // Form state
+  const emptyForm = {
+    profileImage: null,
     fullName: "",
     title: "",
     email: "",
@@ -33,33 +33,78 @@ export default function UserForm() {
     workExperience: "",
     education: "",
     projects: "",
-    resume: null, // base64 string
+    resume: null,
     github: "",
     linkedin: "",
     twitter: "",
     skills: "",
+  };
+  const [formData, setFormData] = useState(emptyForm);
+  // Section expansion
+  const [expandedSections, setExpandedSections] = useState({
+    basic: false,
+    about: false,
+    professional: false,
+    projects: false,
+    social: false,
   });
-  const [loading, setLoading] = useState(false);
-  const [originalInput, setOriginalInput] = useState(""); // Track original input for regeneration
-  const [hasGenerated, setHasGenerated] = useState(false); // Track if generation has been used
 
-  // Generic handler for text/textarea inputs
+  // On mount, fetch previous profile but do not set formData
+  useEffect(() => {
+    setShowAlert(true);
+    const timer = setTimeout(() => setShowAlert(false), 7000);
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/profile', {
+          credentials: 'include'
+        });
+        const data = await response.json();
+        if (data.success && data.profile) {
+          setPreviousProfile({
+            profileImage: data.profile.profileImage || null,
+            fullName: data.profile.fullName || "",
+            title: data.profile.title || "",
+            email: data.profile.email || "",
+            phone: data.profile.phone || "",
+            location: data.profile.location || "",
+            aboutMe: data.profile.aboutMe || "",
+            workExperience: data.profile.workExperience || "",
+            education: data.profile.education || "",
+            projects: data.profile.projects || "",
+            resume: data.profile.resume || null,
+            github: data.profile.github || "",
+            linkedin: data.profile.linkedin || "",
+            twitter: data.profile.twitter || "",
+            skills: data.profile.skills || "",
+          });
+        }
+      } catch (error) {
+        setPreviousProfile(null);
+      }
+    };
+    fetchProfile();
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Handler for Yes button in alert
+  const handleApplyPrevious = () => {
+    if (previousProfile) {
+      setFormData(previousProfile);
+    }
+    setShowAlert(false);
+  };
+
+  // Handlers
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    
-    // Reset generation state if user changes the aboutMe input
     if (e.target.name === 'aboutMe' && hasGenerated) {
       setHasGenerated(false);
       setOriginalInput("");
     }
   };
-
-  // Handler for phone input
   const handlePhoneChange = (value) => {
     setFormData({ ...formData, phone: value });
   };
-
-  // Handler for file inputs (profile image, resume)
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (files && files[0]) {
@@ -67,7 +112,7 @@ export default function UserForm() {
       reader.onload = (event) => {
         setFormData((prev) => ({
           ...prev,
-          [name]: event.target.result, // base64 string
+          [name]: event.target.result,
         }));
       };
       reader.readAsDataURL(files[0]);
@@ -80,11 +125,8 @@ export default function UserForm() {
       alert("Please enter some information about yourself first.");
       return;
     }
-    
     setLoading(true);
-    // Store the original input before making the API call
     setOriginalInput(formData.aboutMe);
-    
     try {
       const response = await fetch(
         "http://localhost:5000/generate-about",
@@ -94,16 +136,14 @@ export default function UserForm() {
           body: JSON.stringify({ input: formData.aboutMe }),
         }
       );
-      
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to generate About Me');
       }
-      
       const data = await response.json();
       if (data.output) {
         setFormData((prev) => ({ ...prev, aboutMe: data.output }));
-        setHasGenerated(true); // Mark that generation has been used
+        setHasGenerated(true);
       }
     } catch (error) {
       console.error("Error generating About Me:", error);
@@ -112,14 +152,11 @@ export default function UserForm() {
       setLoading(false);
     }
   };
-
-  // Try Again function - uses original input
   const handleTryAgain = async () => {
     if (!originalInput) {
       alert("No original input available. Please generate first.");
       return;
     }
-    
     setLoading(true);
     try {
       const response = await fetch(
@@ -130,12 +167,10 @@ export default function UserForm() {
           body: JSON.stringify({ input: originalInput }),
         }
       );
-      
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to generate About Me');
       }
-      
       const data = await response.json();
       if (data.output) {
         setFormData((prev) => ({ ...prev, aboutMe: data.output }));
@@ -147,29 +182,24 @@ export default function UserForm() {
       setLoading(false);
     }
   };
-                // STORE DATA
+
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data being stored:', formData);
     try {
-
-      const userId = localStorage.getItem('userId') || 'demoUserId';
       const response = await fetch('http://localhost:5000/api/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, userId }),
+        body: JSON.stringify(formData),
+        credentials: 'include'
       });
       const data = await response.json();
       if (data.success && data.profile) {
-        // Store profile ID or handle navigation as needed
-        localStorage.setItem('currentProfileId', data.profile._id);
         navigate('/style', { state: { ...formData, profileId: data.profile._id } });
       } else {
         throw new Error('Failed to create profile');
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
       alert('Failed to save your information. Please try again.');
     }
   };
@@ -214,6 +244,14 @@ export default function UserForm() {
 
   return (
     <div className="bg-gray-100">
+      {/* Alert Sidebar */}
+      <div
+        className={`fixed top-8 right-0 z-50 transition-transform duration-500 ${showAlert ? 'translate-x-0' : 'translate-x-full'} w-64 bg-amber-100 text-black shadow-lg rounded-l-xl p-4 flex flex-col items-center`}
+        style={{ minHeight: '60px' }}
+      >
+        <span className="text-md font-semibold">Do you want to apply previous inputs</span>
+        <button onClick={handleApplyPrevious} className="border-2 p-3 rounded-2xl mt-5 bg-blue-500 text-white w-30 hover:bg-blue-600 cursor-pointer">Yes</button>
+      </div>
       <header className="text-center flex flex-col items-center p-4">
         <img
           src={user5}

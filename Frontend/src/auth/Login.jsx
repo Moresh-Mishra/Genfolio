@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -13,6 +14,8 @@ export default function Login() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupMessage, setSignupMessage] = useState("");
+
+  const navigate = useNavigate();
 
   // Classes
   const containerClass = "w-[950px] h-[500px] bg-white/90 rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex relative transition-all duration-700";
@@ -32,12 +35,15 @@ export default function Login() {
       const res = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword })
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        credentials: "include"
       });
       const data = await res.json();
       if (res.ok) {
         setLoginMessage("Login successful!");
-        // Optionally, redirect or store user info/token here
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } else {
         setLoginMessage(data.error || "Login failed");
       }

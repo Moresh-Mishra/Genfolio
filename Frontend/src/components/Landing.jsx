@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import user5 from "../assets/user5.png";
 import user6 from "../assets/user6.png";
@@ -8,11 +8,58 @@ import CustomerReviews from "./CustomerReviews.jsx";
 import { ClockIcon, ArrowRightEndOnRectangleIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const Landing = () => {
+  const [username, setUsername] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/get-username", {
+          credentials: "include"
+        });
+        const data = await res.json();
+        if (res.ok && data.username) {
+          setUsername(data.username);
+        } else {
+          setUsername(null);
+        }
+      } catch (err) {
+        setUsername(null);
+      }
+    };
+    fetchUsername();
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const handleStartForFree = () => navigate('/form');
   const handleHistory = () => navigate('/history');
   const handleLogin = () => navigate('/login');
+  const handleLogout = async () => {
+    await fetch('http://localhost:5000/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+    setUsername(null);
+    setShowDropdown(false);
+  };
 
   return (
     <div>
@@ -24,16 +71,46 @@ const Landing = () => {
               <img src={user6} alt="" className="w-11 h-11 rounded-full transition-transform duration-200 hover:scale-105" />
               <h1 className="text-2xl font-bold text-blue-800 tracking-tight transition-colors duration-200 hover:text-blue-600 cursor-pointer">Genfolio</h1>
             </div>
-            {/* Right group: History and Login */}
+            {/* Right group: History and Login/Username */}
             <div className="flex flex-row items-center gap-3">
-              <button className="flex items-center gap-1 border border-blue-100 px-3 py-1.5 rounded-lg cursor-pointer bg-white/90 hover:bg-blue-50 transition-all duration-200 font-medium" onClick={handleHistory}>
+              {/* <button className="flex items-center gap-1 border border-blue-100 px-3 py-1.5 rounded-lg cursor-pointer bg-white/90 hover:bg-blue-50 transition-all duration-200 font-medium" onClick={handleHistory}>
                 <ArrowPathIcon className="w-6 h-6 text-blue-500" />
                 History
-              </button>
-              <button className="flex items-center gap-1 border border-blue-200 px-3 py-1.5 rounded-lg cursor-pointer text-white bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 font-semibold" onClick={handleLogin}>
-                <ArrowRightEndOnRectangleIcon className="w-7 h-6 text-white" />
-                Login
-              </button>
+              </button> */}
+              {username ? (
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-800 text-pink-500 font-semibold focus:outline-none cursor-pointer"
+                    onClick={() => setShowDropdown((prev) => !prev)}
+                  >
+                    <span className="bg-gradient-to-bl from-pink-400 via-purple-400 to-blue-500 bg-clip-text text-transparent font-bold text-xl flex flex-row items-center align-center">
+                      <img src={user5} className="w-10 mr-2" alt="" />
+                      {username}
+                    </span>
+                  </button>
+                  {showDropdown && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg z-50">
+                      <button
+                        onClick={handleHistory}
+                        className="block w-full text-left px-4 py-3 hover:border-1 hover:bg-gray-100 rounded-lg"
+                      >
+                        History
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-3 hover:border-1 text-red-600 hover:bg-gray-100 rounded-lg"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button className="flex items-center gap-1 border border-blue-200 px-3 py-1.5 rounded-lg cursor-pointer text-white bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 font-semibold" onClick={handleLogin}>
+                  <ArrowRightEndOnRectangleIcon className="w-7 h-6 text-white" />
+                  Login
+                </button>
+              )}
             </div>
           </div>
           <div className="bg-gradient-to-bl from-pink-100 to-blue-100 min-h-[155px] p-4 sm:p-6">
