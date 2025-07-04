@@ -12,17 +12,25 @@ import {
 } from "@heroicons/react/24/solid";
 import React, { useEffect, useState, useRef } from "react";
 import Footer from "../navbar/Footer";
-import { href, redirect, useLocation } from "react-router-dom";
+import { href, redirect, useLocation, useSearchParams } from "react-router-dom";
 import Transitions from "../components/Transitions";
 
 function Minimalist() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [userData, setUserData] = useState(location.state || {});
   const pdfRef = useRef();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (!location.state || Object.keys(location.state).length === 0) {
+    const share = searchParams.get('share');
+    if ((!location.state || Object.keys(location.state).length === 0) && share) {
+      fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.data) setUserData(data.data);
+        });
+    } else if (!location.state || Object.keys(location.state).length === 0) {
+      const fetchUserData = async () => {
         try {
           const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
@@ -33,11 +41,11 @@ function Minimalist() {
         } catch (error) {
           console.error("Error fetching user Data: ", error);
         }
-      }
-    };
+      };
 
-    fetchUserData();
-  }, [location.state]);
+      fetchUserData();
+    }
+  }, [location.state, searchParams]);
   return (
     <>
       <Header pdfRef={pdfRef} fileName={`${userData.fullName || 'Portfolio'}-Minimalist.pdf`} userData={userData} templateName="Minimalist" />

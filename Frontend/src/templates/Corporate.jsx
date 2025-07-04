@@ -9,15 +9,23 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Transitions from "../components/Transitions";
  function Corporate() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [user, setUser] = useState(location.state || {});
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (!location.state || Object.keys(location.state).length === 0) {
+    const share = searchParams.get('share');
+    if ((!location.state || Object.keys(location.state).length === 0) && share) {
+      fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.data) setUser(data.data);
+        });
+    } else if (!location.state || Object.keys(location.state).length === 0) {
+      const fetchUserData = async () => {
         try {
           const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
@@ -28,11 +36,10 @@ import Transitions from "../components/Transitions";
         } catch (error) {
           console.error("Error fetching user Data: ", error);
         }
-      }
-    };
-
-    fetchUserData();
-  }, [location.state]);
+      };
+      fetchUserData();
+    }
+  }, [location.state, searchParams]);
 
   return (
     <>
