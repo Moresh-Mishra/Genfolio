@@ -19,7 +19,7 @@ import Transitions from "../components/Transitions";
     const fetchUserData = async () => {
       if (!location.state || Object.keys(location.state).length === 0) {
         try {
-          const response = await fetch("https://localhost:5000/user");
+          const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUser(data);
@@ -36,7 +36,7 @@ import Transitions from "../components/Transitions";
 
   return (
     <>
-      <Header />
+      <Header userData={user} templateName="Corporate" />
       <div className="mb-5">
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}

@@ -21,7 +21,7 @@ function Creative() {
     const fetchUserData = async () => {
       if (!location.state || Object.keys(location.state).length === 0) {
         try {
-          const response = await fetch("https://localhost:5000/user");
+          const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUserData(data);
@@ -38,7 +38,7 @@ function Creative() {
 
   return (
     <>
-      <Header />
+      <Header userData={userData} templateName="Creative" />
       <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#5a2496] via-[#1e267c] to-[#1a3a8c]">
         {/* Blurred gradient spots for background depth */}
         <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-800 rounded-full opacity-40 blur-3xl pointer-events-none"></div>

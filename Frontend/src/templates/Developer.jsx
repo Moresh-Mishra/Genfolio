@@ -56,7 +56,7 @@ function Developer() {
 
   return (
     <>
-      <Header />
+      <Header userData={user} templateName="Developer" />
       <div className="flex justify-center bg-slate-900 px-4 py-6 min-h-fit">
         <div className="flex flex-col items-start space-y-4">
           {/* Main Card */}

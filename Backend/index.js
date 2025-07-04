@@ -263,5 +263,28 @@ app.post('/logout', (req, res) => {
 // --- Root endpoint ---
 app.get('/', (req, res) => res.send('API is working'));
 
+// In-memory storage for shared portfolios
+const sharedPortfolios = {};
+
+// Save shared portfolio
+app.post('/api/portfolio-share', (req, res) => {
+  const { uuid, template, data } = req.body;
+  if (!uuid || !template || !data) {
+    return res.status(400).json({ error: 'uuid, template, and data are required' });
+  }
+  sharedPortfolios[uuid] = { template, data };
+  res.json({ success: true });
+});
+
+// Get shared portfolio by uuid
+app.get('/api/portfolio-share/:uuid', (req, res) => {
+  const { uuid } = req.params;
+  const portfolio = sharedPortfolios[uuid];
+  if (!portfolio) {
+    return res.status(404).json({ error: 'Portfolio not found' });
+  }
+  res.json(portfolio);
+});
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

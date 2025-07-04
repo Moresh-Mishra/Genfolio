@@ -24,7 +24,7 @@ function Minimalist() {
     const fetchUserData = async () => {
       if (!location.state || Object.keys(location.state).length === 0) {
         try {
-          const response = await fetch("https://localhost:5000/user");
+          const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUserData(data);
@@ -40,7 +40,7 @@ function Minimalist() {
   }, [location.state]);
   return (
     <>
-      <Header pdfRef={pdfRef} fileName={`${userData.fullName || 'Portfolio'}-Minimalist.pdf`} />
+      <Header pdfRef={pdfRef} fileName={`${userData.fullName || 'Portfolio'}-Minimalist.pdf`} userData={userData} templateName="Minimalist" />
 
       <div ref={pdfRef}>
         <div className="flex flex-col items-center justify-center mt-5 mb-10">

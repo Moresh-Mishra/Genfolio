@@ -1,22 +1,18 @@
 import { ArrowDownTrayIcon, ArrowLeftIcon, ShareIcon, LinkIcon } from '@heroicons/react/24/solid';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-function Header({pdfRef, fileName}) {
+function Header({pdfRef, fileName, userData, templateName}) {
   const navigate = useNavigate();
-  const { portfolioId } = useParams();
   const location = useLocation();
   const [shareUrl, setShareUrl] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    // Generate share URL if we have a portfolio ID
-    if (portfolioId) {
-      const currentUrl = window.location.href;
-      setShareUrl(currentUrl);
-    }
-  }, [portfolioId]);
+    setShareUrl(window.location.href);
+  }, [location]);
 
   useEffect(() => {
     // Close dropdown when clicking outside
@@ -35,7 +31,8 @@ function Header({pdfRef, fileName}) {
   const home = () => navigate('/');
 
   const copyToClipboard = async () => {
-    if (shareUrl) {
+    // If already a share link, just copy
+    if (shareUrl.includes('share=')) {
       try {
         await navigator.clipboard.writeText(shareUrl);
         alert('URL copied to clipboard!');
@@ -43,6 +40,24 @@ function Header({pdfRef, fileName}) {
       } catch (err) {
         console.error('Failed to copy: ', err);
       }
+      return;
+    }
+    // Otherwise, generate UUID, save data, and update share URL
+    const uuid = uuidv4();
+    try {
+      await fetch('http://localhost:5000/api/portfolio-share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uuid, template: templateName, data: userData })
+      });
+      const newUrl = `${window.location.origin}${window.location.pathname}?share=${uuid}`;
+      setShareUrl(newUrl);
+      await navigator.clipboard.writeText(newUrl);
+      alert('Shareable URL copied to clipboard!');
+      setShowDropdown(false);
+    } catch (err) {
+      console.error('Failed to share: ', err);
+      alert('Failed to generate share link.');
     }
   };
 
@@ -76,7 +91,7 @@ function Header({pdfRef, fileName}) {
               );
               window.print();
             }}
-            className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
+            className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors cursor-poter"
           >
             <ArrowDownTrayIcon className="w-5 h-5" />
             Download PDF

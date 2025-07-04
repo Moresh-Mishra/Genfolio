@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import WrappedLanding from "./Landing"; // already wrapped in Transitions
 import History from './History';
 import UserForm from './UserForm';
@@ -9,6 +9,7 @@ import Corporate from '../templates/Corporate';
 import Developer from '../templates/Developer';
 import Login from '../auth/Login';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const pageVariants = {
   initial: { opacity: 0, y: 40 },
@@ -37,6 +38,27 @@ const AnimatedPage = ({ children }) => (
 
 const AnimatedRoutes = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const share = params.get('share');
+    if (share) {
+      // Fetch shared portfolio
+      fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.template && data.data) {
+            // Lowercase and route match
+            const templateRoute = `/${data.template.toLowerCase()}`;
+            navigate(templateRoute, { state: data.data, replace: true });
+          }
+        })
+        .catch(err => {
+          alert('Failed to load shared portfolio.');
+        });
+    }
+  }, [location.search, navigate]);
 
   return (
     <>
