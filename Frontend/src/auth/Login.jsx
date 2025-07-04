@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Transitions from "../components/Transitions";
 
-export default function Login() {
+export default Transitions(function Login() {
   const [showSignUp, setShowSignUp] = useState(false);
 
   // State for login
@@ -13,6 +15,8 @@ export default function Login() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupMessage, setSignupMessage] = useState("");
+
+  const navigate = useNavigate();
 
   // Classes
   const containerClass = "w-[950px] h-[500px] bg-white/90 rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex relative transition-all duration-700";
@@ -32,12 +36,15 @@ export default function Login() {
       const res = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword })
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        credentials: "include"
       });
       const data = await res.json();
       if (res.ok) {
         setLoginMessage("Login successful!");
-        // Optionally, redirect or store user info/token here
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } else {
         setLoginMessage(data.error || "Login failed");
       }
@@ -105,7 +112,7 @@ export default function Login() {
                   Enter your details and start your journey with us.
                 </p>
                 <button className={btnOutline} onClick={() => setShowSignUp(false)}>
-                  Sign In
+                  Sign Up
                 </button>
               </>
             ) : (
@@ -115,7 +122,7 @@ export default function Login() {
                   To keep connected with us, please log in with your personal info.
                 </p>
                 <button className={btnOutline} onClick={() => setShowSignUp(true)}>
-                  Sign Up
+                  Sign In
                 </button>
               </>
             )}
@@ -131,4 +138,4 @@ export default function Login() {
       `}</style>
     </div>
   );
-}
+});

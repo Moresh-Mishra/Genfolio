@@ -1,6 +1,7 @@
 import {ArrowLeftIcon, CalendarIcon} from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import user5 from '../assets/user5.png';
+import Transitions from "./Transitions";
 
 function History() {
   const navigate = useNavigate();
@@ -39,4 +40,5 @@ function History() {
   );
 }
 
-export default History;
+const WrappedHistory = Transitions(History);
+export default WrappedHistory;

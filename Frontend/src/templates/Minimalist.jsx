@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import Footer from "../navbar/Footer";
 import { href, redirect, useLocation } from "react-router-dom";
+import Transitions from "../components/Transitions";
 
 function Minimalist() {
   const location = useLocation();
@@ -227,4 +228,5 @@ function Minimalist() {
   );
 }
 
-export default Minimalist;
+const WrappedMinimalist = Transitions(Minimalist);
+export default WrappedMinimalist;

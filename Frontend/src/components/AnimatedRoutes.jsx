@@ -1,0 +1,64 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
+import WrappedLanding from "./Landing"; // already wrapped in Transitions
+import History from './History';
+import UserForm from './UserForm';
+import Selection from './Selection';
+import Minimalist from '../templates/Minimalist';
+import Creative from '../templates/Creative';
+import Corporate from '../templates/Corporate';
+import Developer from '../templates/Developer';
+import Login from '../auth/Login';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const pageVariants = {
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -40 },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "anticipate",
+  duration: 0.6,
+};
+
+const AnimatedPage = ({ children }) => (
+  <motion.div
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    transition={pageTransition}
+    style={{ minHeight: '100vh' }}
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<WrappedLanding />} />
+        <Route path="/history" element={<AnimatedPage><History /></AnimatedPage>} />
+        <Route path="/form" element={<AnimatedPage><UserForm /></AnimatedPage>} />
+        <Route path="/style" element={<AnimatedPage><Selection /></AnimatedPage>} />
+        <Route path="/minimalist" element={<AnimatedPage><Minimalist /></AnimatedPage>} />
+        <Route path="/creative" element={<AnimatedPage><Creative /></AnimatedPage>} />
+        <Route path="/corporate" element={<AnimatedPage><Corporate /></AnimatedPage>} />
+        <Route path="/developer" element={<AnimatedPage><Developer /></AnimatedPage>} />
+        <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
+        <Route path="/minimalist/:portfolioId" element={<AnimatedPage><Minimalist /></AnimatedPage>} />
+        <Route path="/creative/:portfolioId" element={<AnimatedPage><Creative /></AnimatedPage>} />
+        <Route path="/corporate/:portfolioId" element={<AnimatedPage><Corporate /></AnimatedPage>} />
+        <Route path="/developer/:portfolioId" element={<AnimatedPage><Developer /></AnimatedPage>} />
+      </Routes>
+    </AnimatePresence>
+    </>
+  );
+};
+
+export default AnimatedRoutes;

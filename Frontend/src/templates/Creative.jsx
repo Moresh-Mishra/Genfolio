@@ -11,6 +11,7 @@ import { useCallback } from "react";
 import { loadFull } from "tsparticles";
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import Transitions from "../components/Transitions";
 
 function Creative() {
   const location = useLocation();
@@ -352,4 +353,5 @@ function Creative() {
   );
 }
 
-export default Creative;
+const WrappedCreative = Transitions(Creative);
+export default WrappedCreative;

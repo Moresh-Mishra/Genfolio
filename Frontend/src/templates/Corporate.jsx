@@ -10,8 +10,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
-export default function Corporate() {
+import Transitions from "../components/Transitions";
+ function Corporate() {
   const location = useLocation();
   const [user, setUser] = useState(location.state || {});
 
@@ -192,3 +192,6 @@ export default function Corporate() {
     </>
   );
 }
+
+const WrappedCorporate = Transitions(Corporate);
+export default WrappedCorporate;
