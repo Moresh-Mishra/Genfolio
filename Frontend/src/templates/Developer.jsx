@@ -161,7 +161,7 @@ function Developer() {
               <h1 className="text-emerald-500 text-2xl font-bold">Skills</h1>
             </div>
             {/* border border-emerald-500 text-white text-lg px-2 py-2 rounded-md w-[225px] flex justify-between items-center */}
-            <div className="p-5 w-770">
+            <div className="p-5 w-200">
               {user.skills ? (
                 <ul className="grid grid-cols-4 gap-4 list-disc list-inside">
                   {user.skills.split(",").map((skill, index) => (
