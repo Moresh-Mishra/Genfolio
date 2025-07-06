@@ -90,7 +90,7 @@ function Developer() {
               <h3 className="text-2xl text-gray-300">{user.title}</h3>
 
               <div className="flex items-center gap-2">
-                <a href={user.github}>
+                <a href={user.linkedin}>
                   <svg
                     className="w-5 h-5 inline-block mr-2 text-emerald-500"
                     viewBox="0 0 24 24"
@@ -100,7 +100,7 @@ function Developer() {
                   </svg>
                 </a>
 
-                <a href={user.linkedin}>
+                <a href={user.github}>
                   <svg
                     className="w-5 h-5 inline-block mr-2 text-emerald-500"
                     viewBox="0 0 24 24"
@@ -151,7 +151,7 @@ function Developer() {
               <UserIcon className="w-8 h-8 text-emerald-500" />
               <h1 className="text-emerald-500 text-2xl font-bold">About Me</h1>
             </div>
-            <p className="text-gray-300">{user.aboutMe}</p>
+            <div className="text-gray-300 whitespace-pre-wrap">{user.aboutMe}</div>
           </div>
 
           {/* Skills */}
@@ -189,7 +189,7 @@ function Developer() {
             </div>
             <div className="flex flex-col space-y-2 border-1 border-emerald-500 p-4 w-201">
               <h2 className="text-emerald-500">Professional journey</h2>
-              <p className="text-gray-300">{user.workExperience}</p>
+              <div className="text-gray-300 whitespace-pre-wrap">{user.workExperience}</div>
             </div>
           </div>
 
@@ -204,7 +204,7 @@ function Developer() {
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
                 <h2 className="text-emerald-500 p-1">Featured Work</h2>
-                <p className="text-gray-300 w-[340px]">{user.projects}</p>
+                <div className="text-gray-300 w-[340px] whitespace-pre-wrap">{user.projects}</div>
               </div>
             </div>
 
@@ -218,8 +218,8 @@ function Developer() {
               </div>
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
-                <h2 className="text-emerald-500 p-1">Learning Path</h2>
-                <p className="text-gray-300 w-[340px]">{user.education}</p>
+                <h2 className="text-emerald-500 p-1">Academic Background</h2>
+                <div className="text-gray-300 w-[340px] whitespace-pre-wrap">{user.education}</div>
               </div>
             </div>
           </div>

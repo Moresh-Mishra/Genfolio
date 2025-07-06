@@ -128,7 +128,7 @@ import Transitions from "../components/Transitions";
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Professional Experience</h1>
                 </div>
-                <h3 className="p-4 text-lg">{user.workExperience}</h3>
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.workExperience}</div>
               </div>
             </div>
 
@@ -138,7 +138,7 @@ import Transitions from "../components/Transitions";
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Key Projects</h1>
                 </div>
-                <h3 className="p-4 text-lg">{user.projects}</h3>
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.projects}</div>
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@ import Transitions from "../components/Transitions";
                     Education and Qualifications
                   </h1>
                 </div>
-                {user.education}
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.education}</div>
               </div>
               <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl bg-blue-100">
                 <div className="flex p-4 items-center">
