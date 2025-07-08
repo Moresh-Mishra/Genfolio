@@ -9,17 +9,25 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-
-export default function Corporate() {
+import { useLocation, useSearchParams } from "react-router-dom";
+import Transitions from "../components/Transitions";
+ function Corporate() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [user, setUser] = useState(location.state || {});
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (!location.state || Object.keys(location.state).length === 0) {
+    const share = searchParams.get('share');
+    if ((!location.state || Object.keys(location.state).length === 0) && share) {
+      fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.data) setUser(data.data);
+        });
+    } else if (!location.state || Object.keys(location.state).length === 0) {
+      const fetchUserData = async () => {
         try {
-          const response = await fetch("https://localhost:5000/user");
+          const response = await fetch("http://localhost:5000/user");
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUser(data);
@@ -28,15 +36,14 @@ export default function Corporate() {
         } catch (error) {
           console.error("Error fetching user Data: ", error);
         }
-      }
-    };
-
-    fetchUserData();
-  }, [location.state]);
+      };
+      fetchUserData();
+    }
+  }, [location.state, searchParams]);
 
   return (
     <>
-      <Header />
+      <Header userData={user} templateName="Corporate" />
       <div className="mb-5">
         <div className="flex items-center justify-between bg-gradient-to-bl from-blue-900 to-blue-800 p-12">
           {/* ---------------------------------------------------------------- */}
@@ -121,7 +128,7 @@ export default function Corporate() {
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Professional Experience</h1>
                 </div>
-                <h3 className="p-4 text-lg">{user.workExperience}</h3>
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.workExperience}</div>
               </div>
             </div>
 
@@ -131,7 +138,7 @@ export default function Corporate() {
                   <UserIcon className=" w-10 h-10 bg-blue-300 rounded-xl p-2" />
                   <h1 className=" text-2xl p-2">Key Projects</h1>
                 </div>
-                <h3 className="p-4 text-lg">{user.projects}</h3>
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.projects}</div>
               </div>
             </div>
           </div>
@@ -168,7 +175,7 @@ export default function Corporate() {
                     Education and Qualifications
                   </h1>
                 </div>
-                {user.education}
+                <div className="p-4 text-lg whitespace-pre-wrap">{user.education}</div>
               </div>
               <div className="flex flex-col p-4  mt-4 shadow-lg ml-8 mr-8 rounded-2xl bg-blue-100">
                 <div className="flex p-4 items-center">
@@ -192,3 +199,6 @@ export default function Corporate() {
     </>
   );
 }
+
+const WrappedCorporate = Transitions(Corporate);
+export default WrappedCorporate;

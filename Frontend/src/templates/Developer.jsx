@@ -10,18 +10,27 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState, useRef } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import Transitions from "../components/Transitions";
 
 function Developer() {
 
     const location = useLocation();
     const { portfolioId } = useParams(); // Get portfolio ID from URL
+    const [searchParams] = useSearchParams();
     const [user, setUser] = useState(location.state || {});
   
     useEffect(() => {
-      const fetchUserData = async () => {
+      const share = searchParams.get('share');
+      if ((!location.state || Object.keys(location.state).length === 0) && share) {
+        fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.data) setUser(data.data);
+          });
+      } else if (portfolioId) {
         // If we have a portfolio ID in the URL, fetch that specific portfolio
-        if (portfolioId) {
+        const fetchPortfolio = async () => {
           try {
             const response = await fetch(`http://localhost:5000/portfolio/${portfolioId}`);
             if (response.ok) {
@@ -34,9 +43,10 @@ function Developer() {
           } catch (error) {
             console.error("Error fetching portfolio by ID: ", error);
           }
-        }
-        // Fallback to location.state or fetch from /user endpoint
-        else if (!location.state || Object.keys(location.state).length === 0) {
+        };
+        fetchPortfolio();
+      } else if (!location.state || Object.keys(location.state).length === 0) {
+        const fetchUserData = async () => {
           try {
             const response = await fetch("http://localhost:5000/user");
             const data = await response.json();
@@ -47,15 +57,14 @@ function Developer() {
           } catch (error) {
             console.error("Error fetching user Data: ", error);
           }
-        }
-      };
-  
-      fetchUserData();
-    }, [location.state, portfolioId]);
+        };
+        fetchUserData();
+      }
+    }, [location.state, searchParams, portfolioId]);
 
   return (
     <>
-      <Header />
+      <Header userData={user} templateName="Developer" />
       <div className="flex justify-center bg-slate-900 px-4 py-6 min-h-fit">
         <div className="flex flex-col items-start space-y-4">
           {/* Main Card */}
@@ -81,7 +90,7 @@ function Developer() {
               <h3 className="text-2xl text-gray-300">{user.title}</h3>
 
               <div className="flex items-center gap-2">
-                <a href={user.github}>
+                <a href={user.linkedin}>
                   <svg
                     className="w-5 h-5 inline-block mr-2 text-emerald-500"
                     viewBox="0 0 24 24"
@@ -91,7 +100,7 @@ function Developer() {
                   </svg>
                 </a>
 
-                <a href={user.linkedin}>
+                <a href={user.github}>
                   <svg
                     className="w-5 h-5 inline-block mr-2 text-emerald-500"
                     viewBox="0 0 24 24"
@@ -142,7 +151,7 @@ function Developer() {
               <UserIcon className="w-8 h-8 text-emerald-500" />
               <h1 className="text-emerald-500 text-2xl font-bold">About Me</h1>
             </div>
-            <p className="text-gray-300">{user.aboutMe}</p>
+            <div className="text-gray-300 whitespace-pre-wrap">{user.aboutMe}</div>
           </div>
 
           {/* Skills */}
@@ -152,7 +161,7 @@ function Developer() {
               <h1 className="text-emerald-500 text-2xl font-bold">Skills</h1>
             </div>
             {/* border border-emerald-500 text-white text-lg px-2 py-2 rounded-md w-[225px] flex justify-between items-center */}
-            <div className="p-5">
+            <div className="p-5 w-200">
               {user.skills ? (
                 <ul className="grid grid-cols-4 gap-4 list-disc list-inside">
                   {user.skills.split(",").map((skill, index) => (
@@ -178,9 +187,9 @@ function Developer() {
                 Experience
               </h1>
             </div>
-            <div className="flex flex-col space-y-2 border-1 border-emerald-500 p-4">
+            <div className="flex flex-col space-y-2 border-1 border-emerald-500 p-4 w-201">
               <h2 className="text-emerald-500">Professional journey</h2>
-              <p className="text-gray-300">{user.workExperience}</p>
+              <div className="text-gray-300 whitespace-pre-wrap">{user.workExperience}</div>
             </div>
           </div>
 
@@ -195,7 +204,7 @@ function Developer() {
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
                 <h2 className="text-emerald-500 p-1">Featured Work</h2>
-                <p className="text-gray-300 w-[340px]">{user.projects}</p>
+                <div className="text-gray-300 w-[340px] whitespace-pre-wrap">{user.projects}</div>
               </div>
             </div>
 
@@ -209,8 +218,8 @@ function Developer() {
               </div>
 
               <div className="flex flex-col items-baseline border border-emerald-500 p-2">
-                <h2 className="text-emerald-500 p-1">Learning Path</h2>
-                <p className="text-gray-300 w-[340px]">{user.education}</p>
+                <h2 className="text-emerald-500 p-1">Academic Background</h2>
+                <div className="text-gray-300 w-[340px] whitespace-pre-wrap">{user.education}</div>
               </div>
             </div>
           </div>
@@ -221,4 +230,5 @@ function Developer() {
   );
 }
 
-export default Developer;
+const WrappedDeveloper = Transitions(Developer);
+export default WrappedDeveloper;

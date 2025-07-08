@@ -8,6 +8,7 @@ import {
   CodeBracketIcon
 } from "@heroicons/react/24/solid";
 import { useNavigate, useLocation } from "react-router-dom";
+import Transitions from "./Transitions";
 
 const Selection = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -533,4 +534,5 @@ const Selection = () => {
   );
 };
 
-export default Selection;
+const WrappedSelection = Transitions(Selection);
+export default WrappedSelection;

@@ -5,14 +5,12 @@ import {
   BuildingOfficeIcon,
   CodeBracketIcon
 } from "@heroicons/react/24/solid";
+import Transitions from "./Transitions";
+
 function Customize() {
   return (
-    <main className="barba-wrapper">
-      <section
-        className="barba-container"
-        data-barba="container"
-        data-barba-namespace="customize"
-      >
+    <main>
+      <section>
         <header className="bg-gradient-to-bl from-pink-100 to-blue-100 h-65">
           <div className="flex flex-col items-center sm:pt-16">
             <img
@@ -275,4 +273,5 @@ function Customize() {
   );
 }
 
-export default Customize;
+const WrappedCustomize = Transitions(Customize);
+export default WrappedCustomize;
