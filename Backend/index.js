@@ -165,10 +165,16 @@ app.post('/generate-about', async (req, res) => {
 // Save or update the profile for the logged-in user
 app.post('/api/profile', async (req, res) => {
   try {
-    if (!req.session.user || !req.session.user.id) {
-      return res.status(401).json({ error: 'Not logged in' });
+    // Remove session check to allow guest profile creation
+    // if (!req.session.user || !req.session.user.id) {
+    //   return res.status(401).json({ error: 'Not logged in' });
+    // }
+    // Use userId from session if available, otherwise generate a guest id
+    let userId = req.session && req.session.user && req.session.user.id;
+    if (!userId) {
+      // For guests, use a unique identifier from the request or generate one
+      userId = req.body.userId || (req.body.email ? req.body.email : uuidv4());
     }
-    const userId = req.session.user.id;
     const profileData = { ...req.body, userId };
     // Upsert: update if exists, otherwise create
     const profile = await Profile.findOneAndUpdate(
@@ -187,10 +193,17 @@ app.post('/api/profile', async (req, res) => {
 // Get the profile for the logged-in user
 app.get('/api/profile', async (req, res) => {
   try {
-    if (!req.session.user || !req.session.user.id) {
-      return res.status(401).json({ error: 'Not logged in' });
+    // Remove session check to allow guest profile fetch
+    // if (!req.session.user || !req.session.user.id) {
+    //   return res.status(401).json({ error: 'Not logged in' });
+    // }
+    let userId = req.session && req.session.user && req.session.user.id;
+    if (!userId) {
+      userId = req.query.userId || req.query.email;
     }
-    const userId = req.session.user.id;
+    if (!userId) {
+      return res.status(400).json({ error: 'User identifier required' });
+    }
     const profile = await Profile.findOne({ userId });
     if (!profile) {
       return res.status(404).json({ error: 'Profile not found' });
