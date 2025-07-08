@@ -124,4 +124,5 @@ app.get('/api/portfolio-share/:uuid', (req, res) => {
   res.json(portfolio);
 });
 
-// NOTE: This file is not used for Vercel deployment. Use api/index.js for serverless deployment.
+// Vercel: Export the app as a serverless function handler
+module.exports = app; 
