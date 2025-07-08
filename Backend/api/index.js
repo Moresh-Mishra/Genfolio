@@ -105,7 +105,7 @@ app.get('/', (req, res) => res.send('API is working'));
 const sharedPortfolios = {};
 
 // Save shared portfolio
-app.post('/api/portfolio-share', (req, res) => {
+app.post('/portfolio-share', (req, res) => {
   const { uuid, template, data } = req.body;
   if (!uuid || !template || !data) {
     return res.status(400).json({ error: 'uuid, template, and data are required' });
@@ -115,7 +115,7 @@ app.post('/api/portfolio-share', (req, res) => {
 });
 
 // Get shared portfolio by uuid
-app.get('/api/portfolio-share/:uuid', (req, res) => {
+app.get('/portfolio-share/:uuid', (req, res) => {
   const { uuid } = req.params;
   const portfolio = sharedPortfolios[uuid];
   if (!portfolio) {

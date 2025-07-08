@@ -45,7 +45,7 @@ const AnimatedRoutes = () => {
     const share = params.get('share');
     if (share) {
       // Fetch shared portfolio
-      fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+      fetch(`/api/portfolio-share/${share}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.template && data.data) {

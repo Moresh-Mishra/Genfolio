@@ -17,7 +17,7 @@ const Landing = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/get-username", {
+        const res = await fetch("/api/get-username", {
           credentials: "include"
         });
         const data = await res.json();
@@ -54,7 +54,7 @@ const Landing = () => {
   const handleHistory = () => navigate('/history');
   const handleLogin = () => navigate('/login');
   const handleLogout = async () => {
-    await fetch('http://localhost:5000/logout', {
+    await fetch('/api/logout', {
       method: 'POST',
       credentials: 'include',
     });
