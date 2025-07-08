@@ -77,7 +77,7 @@ const Profile = mongoose.model('Profile', profileSchema);
 // --- In-memory portfolio management ---
 let portfolios = {};
 
-app.post('/user', (req, res) => {
+app.post('/api/user', (req, res) => {
   const portfolioId = uuidv4();
   portfolios[portfolioId] = req.body;
   res.json({ success: true, portfolioId });
