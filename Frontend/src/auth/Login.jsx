@@ -33,7 +33,7 @@ export default Transitions(function Login() {
     e.preventDefault();
     setLoginMessage("");
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
@@ -58,7 +58,7 @@ export default Transitions(function Login() {
     e.preventDefault();
     setSignupMessage("");
     try {
-      const res = await fetch("http://localhost:5000/register", {
+      const res = await fetch("/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: signupName, email: signupEmail, password: signupPassword })

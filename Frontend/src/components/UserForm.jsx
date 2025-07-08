@@ -58,7 +58,7 @@ function UserForm() {
     const timer = setTimeout(() => setShowAlert(false), 7000);
     const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/profile', {
+        const response = await fetch('/api/profile', {
           credentials: 'include'
         });
         const data = await response.json();
@@ -132,7 +132,7 @@ function UserForm() {
     setOriginalInput(formData.aboutMe);
     try {
       const response = await fetch(
-        "http://localhost:5000/generate-about",
+        "/generate-about",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -163,7 +163,7 @@ function UserForm() {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/generate-about",
+        "/generate-about",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -190,7 +190,7 @@ function UserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/profile', {
+      const response = await fetch('/api/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

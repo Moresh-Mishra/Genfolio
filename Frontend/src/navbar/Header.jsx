@@ -45,7 +45,7 @@ function Header({pdfRef, fileName, userData, templateName}) {
     // Otherwise, generate UUID, save data, and update share URL
     const uuid = uuidv4();
     try {
-      await fetch('http://localhost:5000/api/portfolio-share', {
+      await fetch('/api/portfolio-share', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uuid, template: templateName, data: userData })

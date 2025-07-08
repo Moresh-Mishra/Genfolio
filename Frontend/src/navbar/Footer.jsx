@@ -12,7 +12,7 @@ function Footer() {
     const fetchUserData = async () => {
       if (!location.state || Object.keys(location.state).length === 0) {
         try {
-          const response = await fetch("http://localhost:5000/user");
+          const response = await fetch("/user");
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUserData(data);

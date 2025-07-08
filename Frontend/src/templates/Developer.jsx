@@ -23,7 +23,7 @@ function Developer() {
     useEffect(() => {
       const share = searchParams.get('share');
       if ((!location.state || Object.keys(location.state).length === 0) && share) {
-        fetch(`http://localhost:5000/api/portfolio-share/${share}`)
+        fetch(`/api/portfolio-share/${share}`)
           .then(res => res.json())
           .then(data => {
             if (data && data.data) setUser(data.data);
@@ -32,7 +32,7 @@ function Developer() {
         // If we have a portfolio ID in the URL, fetch that specific portfolio
         const fetchPortfolio = async () => {
           try {
-            const response = await fetch(`http://localhost:5000/portfolio/${portfolioId}`);
+            const response = await fetch(`/portfolio/${portfolioId}`);
             if (response.ok) {
               const data = await response.json();
               setUser(data);
@@ -48,7 +48,7 @@ function Developer() {
       } else if (!location.state || Object.keys(location.state).length === 0) {
         const fetchUserData = async () => {
           try {
-            const response = await fetch("http://localhost:5000/user");
+            const response = await fetch("/user");
             const data = await response.json();
             if (data && Object.keys(data).length > 0) {
               setUser(data);

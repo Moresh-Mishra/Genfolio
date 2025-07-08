@@ -14,7 +14,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(session({
-  secret: 'your-secret-key', // use a strong secret in production!
+  secret: process.env.SESSION_SECRET || 'your-secret-key', // use a strong secret in production!
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // false for HTTP, true for HTTPS
@@ -27,7 +27,8 @@ app.use((req, res, next) => {
 });
 
 // --- MongoDB/Mongoose setup ---
-mongoose.connect('mongodb://localhost:27017/Genfolio');
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/Genfolio';
+mongoose.connect(mongoUri);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
@@ -300,4 +301,9 @@ app.get('/api/portfolio-share/:uuid', (req, res) => {
 });
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;
+exports.default = app;
