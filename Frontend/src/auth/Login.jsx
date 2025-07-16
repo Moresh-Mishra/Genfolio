@@ -58,6 +58,10 @@ export default Transitions(function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     setSignupMessage("");
+    if (!signupName || !signupEmail || !signupPassword) {
+      setSignupMessage("All fields are required.");
+      return;
+    }
     try {
       const res = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
