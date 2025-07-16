@@ -223,6 +223,9 @@ app.get('/api/profile', async (req, res) => {
 // --- User Registration ---
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
   const saltRounds = 10;
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
