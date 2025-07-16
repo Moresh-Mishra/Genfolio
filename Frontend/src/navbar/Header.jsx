@@ -2,6 +2,7 @@ import { ArrowDownTrayIcon, ArrowLeftIcon, ShareIcon, LinkIcon } from '@heroicon
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { API_BASE_URL } from "../config";
 
 function Header({pdfRef, fileName, userData, templateName}) {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Header({pdfRef, fileName, userData, templateName}) {
     // Otherwise, generate UUID, save data, and update share URL
     const uuid = uuidv4();
     try {
-      await fetch('/api/portfolio-share', {
+      await fetch(`${API_BASE_URL}/api/portfolio-share`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uuid, template: templateName, data: userData })

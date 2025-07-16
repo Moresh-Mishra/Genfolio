@@ -7,6 +7,7 @@ import download from "../assets/download.png";
 import CustomerReviews from "./CustomerReviews.jsx";
 import { ClockIcon, ArrowRightEndOnRectangleIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 import Transitions from "./Transitions";
+import { API_BASE_URL } from "../config";
 
 const Landing = () => {
   const [username, setUsername] = useState(null);
@@ -17,7 +18,7 @@ const Landing = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const res = await fetch("/api/get-username", {
+        const res = await fetch(`${API_BASE_URL}/api/get-username`, {
           credentials: "include"
         });
         const data = await res.json();
@@ -54,7 +55,7 @@ const Landing = () => {
   const handleHistory = () => navigate('/history');
   const handleLogin = () => navigate('/login');
   const handleLogout = async () => {
-    await fetch('/logout', {
+    await fetch(`${API_BASE_URL}/logout`, {
       method: 'POST',
       credentials: 'include',
     });

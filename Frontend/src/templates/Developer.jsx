@@ -12,6 +12,7 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import Transitions from "../components/Transitions";
+import { API_BASE_URL } from "../config";
 
 function Developer() {
 
@@ -23,7 +24,7 @@ function Developer() {
     useEffect(() => {
       const share = searchParams.get('share');
       if ((!location.state || Object.keys(location.state).length === 0) && share) {
-        fetch(`/api/portfolio-share/${share}`)
+        fetch(`${API_BASE_URL}/api/portfolio-share/${share}`)
           .then(res => res.json())
           .then(data => {
             if (data && data.data) setUser(data.data);
@@ -32,7 +33,7 @@ function Developer() {
         // If we have a portfolio ID in the URL, fetch that specific portfolio
         const fetchPortfolio = async () => {
           try {
-            const response = await fetch(`/portfolio/${portfolioId}`);
+            const response = await fetch(`${API_BASE_URL}/portfolio/${portfolioId}`);
             if (response.ok) {
               const data = await response.json();
               setUser(data);
@@ -48,7 +49,7 @@ function Developer() {
       } else if (!location.state || Object.keys(location.state).length === 0) {
         const fetchUserData = async () => {
           try {
-            const response = await fetch("/user");
+            const response = await fetch(`${API_BASE_URL}/user`);
             const data = await response.json();
             if (data && Object.keys(data).length > 0) {
               setUser(data);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { API_BASE_URL } from "../config";
 
 function Footer() {
   const date = new Date();
@@ -12,7 +13,7 @@ function Footer() {
     const fetchUserData = async () => {
       if (!location.state || Object.keys(location.state).length === 0) {
         try {
-          const response = await fetch("/user");
+          const response = await fetch(`${API_BASE_URL}/user`);
           const data = await response.json();
           if (data && Object.keys(data).length > 0) {
             setUserData(data);

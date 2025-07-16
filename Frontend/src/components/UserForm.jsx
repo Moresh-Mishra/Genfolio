@@ -12,6 +12,7 @@ import {
   HashtagIcon,
 } from "@heroicons/react/24/solid";
 import Transitions from "./Transitions";
+import { API_BASE_URL } from "../config";
 
 export default Transitions(UserForm);
 
@@ -58,7 +59,7 @@ function UserForm() {
     const timer = setTimeout(() => setShowAlert(false), 7000);
     const fetchProfile = async () => {
       try {
-        const response = await fetch('/api/profile', {
+        const response = await fetch(`${API_BASE_URL}/api/profile`, {
           credentials: 'include'
         });
         const data = await response.json();
@@ -132,7 +133,7 @@ function UserForm() {
     setOriginalInput(formData.aboutMe);
     try {
       const response = await fetch(
-        "/generate-about",
+        `${API_BASE_URL}/generate-about`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -163,7 +164,7 @@ function UserForm() {
     setLoading(true);
     try {
       const response = await fetch(
-        "/generate-about",
+        `${API_BASE_URL}/generate-about`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -190,7 +191,7 @@ function UserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/profile', {
+      const response = await fetch(`${API_BASE_URL}/api/profile`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
