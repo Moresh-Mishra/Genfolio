@@ -12,6 +12,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'https://genfolioupdates.vercel.app',
     'https://genfolio-eight.vercel.app'
   ],
   credentials: true
@@ -306,7 +307,7 @@ app.get('/api/portfolio-share/:uuid', (req, res) => {
   res.json(portfolio);
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 if (require.main === module) {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
