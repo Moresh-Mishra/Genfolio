@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Transitions from "../components/Transitions";
+import { API_BASE_URL } from "../config";
 
 export default Transitions(function Login() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -33,7 +34,7 @@ export default Transitions(function Login() {
     e.preventDefault();
     setLoginMessage("");
     try {
-      const res = await fetch("/login", {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
@@ -58,7 +59,7 @@ export default Transitions(function Login() {
     e.preventDefault();
     setSignupMessage("");
     try {
-      const res = await fetch("/register", {
+      const res = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: signupName, email: signupEmail, password: signupPassword })
