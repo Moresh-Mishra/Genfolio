@@ -37,12 +37,11 @@ export default Transitions(function Login() {
       const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword })
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        credentials: "include"
       });
       const data = await res.json();
-      if (res.ok && data.token) {
-        // Store JWT token in localStorage
-        localStorage.setItem('jwtToken', data.token);
+      if (res.ok) {
         setLoginMessage("Login successful!");
         setTimeout(() => {
           navigate("/");

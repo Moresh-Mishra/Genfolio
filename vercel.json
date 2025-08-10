@@ -19,11 +19,6 @@
     {
       "src": "/(.*)",
       "dest": "Frontend/dist/$1"
-    },
-    {
-      "handle": "rewrite",
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 } 

@@ -59,10 +59,8 @@ function UserForm() {
     const timer = setTimeout(() => setShowAlert(false), 7000);
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('jwtToken');
-        if (!token) return;
         const response = await fetch(`${API_BASE_URL}/api/profile`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+          credentials: 'include'
         });
         const data = await response.json();
         if (data.success && data.profile) {
@@ -193,15 +191,11 @@ function UserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('jwtToken');
-      if (!token) throw new Error('Not authenticated');
       const response = await fetch(`${API_BASE_URL}/api/profile`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        credentials: 'include'
       });
       const data = await response.json();
       if (data.success && data.profile) {

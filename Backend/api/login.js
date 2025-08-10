@@ -1,7 +1,6 @@
 import dbConnect from './_dbConnect';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -25,13 +24,8 @@ export default async function handler(req, res) {
     }
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      // Create JWT token
-      const token = jwt.sign(
-        { userId: user._id, username: user.username, email: user.email },
-        process.env.JWT_SECRET || 'your_jwt_secret',
-        { expiresIn: '7d' }
-      );
-      res.json({ message: 'Login successful', token, username: user.username });
+      // Session logic omitted for serverless compatibility
+      res.json({ message: 'Login successful', username: user.username });
     } else {
       res.status(401).json({ error: 'Invalid email or password' });
     }
