@@ -29,6 +29,23 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://genfolio-eight.vercel.app',
+    'https://genfolio-one.vercel.app',
+    'https://genfolioupdates-cvycv32xz-moreshs-projects.vercel.app'
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  // For preflight requests
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    return res.sendStatus(200);
+  }
   console.log('Cookies:', req.headers.cookie);
   console.log('Session:', req.session);
   next();
