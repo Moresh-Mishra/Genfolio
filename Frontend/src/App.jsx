@@ -1,5 +1,5 @@
 import AnimatedRoutes from "./components/AnimatedRoutes";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 const App = () => (
   <>
   <Router>
