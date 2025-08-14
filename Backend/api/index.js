@@ -13,7 +13,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://genfolio-eight.vercel.app',
-    'https://genfolio-one.vercel.app'
+    'https://genfolio-one.vercel.app',
+    'https://genfolioupdates.vercel.app'
   ],
   credentials: true
 }));
