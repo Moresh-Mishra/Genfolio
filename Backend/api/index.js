@@ -14,7 +14,7 @@ app.use(cors({
     'http://localhost:5173',
     'https://genfolio-eight.vercel.app',
     'https://genfolio-one.vercel.app',
-    'https://genfolioupdates.vercel.app'
+    'https://genfolioupdates-cvycv32xz-moreshs-projects.vercel.app'
   ],
   credentials: true
 }));
