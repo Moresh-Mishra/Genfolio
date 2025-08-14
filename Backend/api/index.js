@@ -24,7 +24,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key', // use a strong secret in production!
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // false for HTTP, true for HTTPS
+  cookie: {
+    secure: true, // true for HTTPS (Render uses HTTPS)
+    sameSite: 'none' // required for cross-site cookies
+  }
 }));
 
 app.use((req, res, next) => {
